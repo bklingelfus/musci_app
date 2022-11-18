@@ -1,1 +1,1 @@
-# musci_app
+# music_app
