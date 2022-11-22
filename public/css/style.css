@@ -1,0 +1,44 @@
+*{border: 1px solid black;}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+/* =================================================== */
+/* - - - - - - - - - - - NAVBAR - - - - - - - - - - -  */
+/* =================================================== */
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    width: 100%;
+}
+    .side {margin: auto 3vw;}
+    #button-space {display: flex;}
+        #button-space div {
+            display: flex;
+            width: 15vw;
+        }
+            .nav-button {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+
+/* =================================================== */
+/* - - - - - - - - - - - INDEX - - - - - - - - - - - - */
+/* =================================================== */
+#current {
+    padding: 0;
+    width: 100%;
+    height: 85vh;
+}
+#footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    height: 12vh;
+}

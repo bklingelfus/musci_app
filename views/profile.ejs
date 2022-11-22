@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/setup.ejs')%>
+<body>
+    <%- include('./partials/navbar.ejs')%>
+    <h2>My Playlists</h2>
+    <% if(currentUser._id==='0'){ %>
+        <h4>Too bad you're not logged in ... :( </h4>
+    <% } else { %>
+        <div>
+            <% for(let i=0;i<currentUser.playlists.length;i++){ %>
+                <form action="/changePlaylist/<%=i%>" method="POST">
+                    <button type='submit'><img src="" alt="Playlist Image"></button>
+                    <a href="/playlist/<%=i%>"><%=currentUser.playlists[i].name%></a>
+                    <p><%=currentUser.playlists[i].songs.length%> songs</p>
+                </form>
+            <% } %>
+                <form action="/createPlaylist?_method=PUT" method="POST">
+                    <input type="text" name="name" value="new playlist">
+                    <button type="submit">Create Playlist</button>
+                </form>
+        </div>
+    <% } %>
+    <h2>Recommended Events</h2>
+    <% if(currentUser._id==='0'){ %>
+        <h4>Too bad you're not logged in ... :( </h4>
+    <% } else { %>
+        <div>
+            <% for(let i=0; i<2;i++){ %>
+                <div>
+                    <h5>Event Name</h5>
+                    <img src="" alt="Artist Img">
+                    <p>Event information</p>
+                    <div class="Google maps"></div>
+                </div>
+            <% }%>
+        </div>
+    <% } %>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

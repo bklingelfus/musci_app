@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/setup.ejs')%>
+<body>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th></th>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Album</th>
+            </tr>
+        </thead>
+        <% for(let i=0; i<songs.length;i++){ %>
+            <tr>
+                <td><%=i+1%></td>
+                <td><%=songs[i].title%></td>
+                <td><%=songs[i].artist%></td>
+                <td><%=songs[i].album%></td>
+            </tr>
+        <% } %>
+    </table>
+</body>
+</html>

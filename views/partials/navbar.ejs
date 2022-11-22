@@ -1,0 +1,21 @@
+<nav id="navbar">
+    <div class="side">
+        <a href="/home">
+            <img src="./site/logo.jpeg" alt="App Logo">
+        </a>
+    </div>
+    <div id="button-space">
+        <div>
+            <a class='nav-button' href="/home">Home</a>
+        </div>
+        <div>
+            <a class='nav-button' href="/search">Search</a>
+        </div>
+        <div>
+            <a class='nav-button' href="/profile/<%=currentUser._id%>">My World</a>
+        </div>
+    </div>
+    <div class="side">
+        <a href="/profile/<%=currentUser._id%>/settings">Profile Settings</a>
+    </div>
+</nav>

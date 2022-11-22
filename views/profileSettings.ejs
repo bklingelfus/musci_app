@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<%-include('./partials/setup.ejs')%>
+<body>
+    <%- include('./partials/navbar.ejs')%>
+    <% if(currentUser._id==='0'){ %>
+    <div>
+        <ion-icon name="person-circle-outline"></ion-icon>
+    </div>
+    <h1>Welcome to Music App!</h1>
+    <form action="/createUser" method="POST">
+        <input type="text" name="username" value="username<%=Math.floor(Math.random()*10000)%>">
+        <input type="password" name="password" placeholder="password">
+        Are you a creator? <input type="checkbox" name="creator">
+        <p>Favorite Genres:</p>
+        <div>                
+            <%for(let i=0; i< genres.length; i++){ %>
+                <%=genres[i]%> <input type="checkbox" name="genrePreferences[<%=i%>]" value="<%=genres[i]%>">
+            <%}%>
+        </div>
+        <input type="submit" value="Create Account">
+    </form>
+    <% } else { %>
+    <div>
+        <div id="settingsOptions">
+            <% if(currentUser.userPhoto===''){%>
+                <div>
+                    <ion-icon name="person-circle-outline"></ion-icon>
+                </div>
+            <% } else { %>
+                <img src="<%=currentUser.userPhoto%>" alt="User Photo">
+            <% } %>
+            <h1><%=currentUser.username%></h1>
+            <ul>
+                <li>Edit Profile</li>
+                <li>General Settings</li>
+                <li>Delete Profile</li>
+            </ul>
+        </div>
+        <div id="settingsDisplay">
+            <div id="editProfile">
+                <form action="/editUser/<%=currentUser._id%>?_method=PUT" method="POST">
+                    <input type="text" name="username" value="<%=currentUser.username%>">
+                    <input type="password" name="password" value="<%=currentUser.password%>">
+                    Creator check <input type="checkbox" name="creator" <% if(currentUser.creator){%>checked<%}%>>
+                    <input type="text" name="userPhoto" placeholder="url to photo">
+                    <p>Favorite Genres:</p>
+                    <div>
+                        <%for(let i=0; i< genres.length; i++){ %>
+                            <%=genres[i]%> <input type="checkbox" name="genrePreferences[<%=i%>]" value="<%=genres[i]%>" <% if(currentUser.genrePreferences.includes(genres[i])){%>checked<%}%>>
+                        <%}%>
+                    </div>
+                    <input type="submit" value="Confirm Edit">
+                </form>
+                <p>Playlists:</p>
+                <div>
+                    <%for(let i=0; i< currentUser.playlists.length; i++){ %>
+                        <form action="/deletePlaylist/<%=i%>?_method=PUT" method="POST">
+                            <%=currentUser.playlists[i].name%> <%if (i>1){%><button type="submit"><ion-icon name="trash-outline"></ion-icon></button><%}%>
+                        </form>
+                    <%}%>
+                </div>
+            </div>
+            <div id="generalSettings">
+                <p>Some general settings adjustments that will be added further in the future</p>
+            </div>
+            <div id="deleteProfile">
+                <p>This action will <span>permanently</span> delete all of your info including all your favorite songs as well as any other changes you might have made</p>
+                <form action="/reset/<%=currentUser._id%>/?_method=DELETE" method="POST">
+                    <input type="submit" value="Delete Anyway">
+                </form>
+            </div>
+        </div>
+    </div>
+    <% } %>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

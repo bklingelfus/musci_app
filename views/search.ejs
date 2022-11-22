@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/setup.ejs')%>
+<body>
+    <%- include('./partials/navbar.ejs')%>
+    <form action="/search" method="POST">
+        <input type="text" name="search" placeholder="song, artist, album, ...">
+        <input id='submitSearch' type="submit" value="Search">
+    </form>
+    <iframe name='showSearch' src="/search/result" frameborder="0"></iframe>
+</body>
+</html>
