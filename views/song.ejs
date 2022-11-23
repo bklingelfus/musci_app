@@ -2,7 +2,64 @@
 <html lang="en">
     <%- include('./partials/setup.ejs')%>
 <body>
-    <h1>You are in Song <%=id%> Info</h1>
-    <a href="/home">Go Home</a>
+    <%- include('./partials/navbar.ejs')%>
+    <form action="/" method="POST">
+        <button class='changeSong' type="submit" name='song' value='<%=song.mp3%>'>
+            <img src="" alt="Album Cover">
+        </button>
+    </form>
+    <h3><%=song.title%></h3>
+    <table>
+        <tr>
+            <td>Artist:</td>
+            <td>
+                <% for(let i=0; i<song.artist.length;i++){ %>
+                    <a href="/<%=song.artist[0]%>/"><%=song.artist[0]%></a>
+                <% } %>
+            </td>
+        </tr>
+        <tr>
+            <td>Album:</td>
+            <td>
+                <a href="/<%=song.artist[0]%>/<%=song.album%>"><%=song.album%></a>
+            </td>
+        </tr>
+        <tr>
+            <td>Year:</td>
+            <td><%=song.year%></td>
+        </tr>
+        <tr>
+            <td>Track N°:</td>
+            <td><%=song.songNum%></td>
+        </tr>
+        <tr>
+            <td>Genre:</td>
+            <td><%=song.genre%></td>
+        </tr>
+    </table>
+    <% for(let i=0; i<song.artist.length;i++){ %>
+        <h4>Upcoming Events featuring <%=song.artist[i]%></h4>
+        <div>
+            <% for(let i=0; i<2;i++){ %>
+                <div>
+                    <h5>Event Name</h5>
+                    <img src="" alt="Artist Img">
+                    <p>Event information</p>
+                    <div class="Google maps"></div>
+                </div>
+            <% }%>
+        </div>
+    <% } %>
+    <h4>Upcoming Events of <%=song.genre%> Music near you</h4>
+        <div>
+            <% for(let i=0; i<2;i++){ %>
+                <div>
+                    <h5>Event Name</h5>
+                    <img src="" alt="Artist Img">
+                    <p>Event information</p>
+                    <div class="Google maps"></div>
+                </div>
+            <% }%>
+        </div>
 </body>
 </html>

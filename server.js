@@ -29,7 +29,7 @@ const genres =[
 
 let currentUser = {_id:'0'};
 let currentSong ='';
-let currentPlaylist= [];
+let currentPlaylist= '';
 let currentSearch = [];
 let showPlaylist =[];
 
@@ -55,6 +55,14 @@ app.listen(3000, ()=>{
 
 app.get('/',(req, res)=>{
     res.render('index.ejs', {currentSong});
+});
+
+app.get('/player', (req, res)=>{
+    console.log(currentSong)
+    res.render('player.ejs',{
+        currentPlaylist,
+        currentSong
+    })
 });
 
 app.get('/home', (req, res)=>{
@@ -102,27 +110,50 @@ app.get('/profile/:id/settings', (req, res)=>{
 });
 
 app.get('/playlist/:id', (req,res)=>{
+    if (currentPlaylist ===''){
+        currentPlaylist = currentUser.playlists[req.params.id];
+    }
     res.render('playlist.ejs',{
         currentPlaylist,
-        currentUser
+        currentUser,
+        id: req.params.id
     });
 });
 
 app.get('/song/:id',(req, res)=>{
-    res.render('song.ejs',{
-        id: req.params.id,
+    Song.find({_id: req.params.id}, (err, match)=>{
+        res.render('song.ejs',{
+            currentUser,
+            song: match[0]
+        });
+    });
+});
+
+app.get('/:artist', (req, res)=>{
+    Song.find({artist: req.params.artist}, (err, match)=>{
+        res.render('artist.ejs', {
+            currentUser,
+            artistCollection: match
+        })
+    })
+});
+
+app.get('/:artist/:album', (req, res)=>{
+    res.render('album.ejs', {
         currentUser
     })
-})
+});
 
 // - - - - - - - - Pages Actions - - - - - - - - - - -
     // Change player song
 app.post('/', (req, res)=> {
+    console.log(req.body)
     currentSong = req.body.song;
 });
 // Change current playlist
 app.post('/changePlaylist/:id', (req,res)=>{
     currentPlaylist=currentUser.playlists[req.params.id]
+    res.redirect('/playlist/:id')
 });
     // Change search display
 app.post('/search', (req, res)=> {
@@ -151,6 +182,7 @@ app.post('/createUser',(req, res)=>{
         {name: 'Favorites', songs: []},
         {name: 'Weekly Adventure', songs: []}
     );
+    // creating user
     User.create(req.body, (error, newUser)=>{
         currentUser=newUser        
     })
@@ -167,9 +199,10 @@ app.delete('/reset/:id', (req, res)=>{
 });
     // Edit user
 app.put('/editUser/:id',(req, res)=>{
+    // adjusting model
     if (req.body.creator==='on'){req.body.creator=true}
     else{req.body.creator=false};
-    console.log(req.body)
+    // updating DB and currentUser variable
     User.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err,updatedUser)=>{
         currentUser=updatedUser
     });
@@ -177,14 +210,34 @@ app.put('/editUser/:id',(req, res)=>{
 });
     // Delete user playlists
 app.put('/deletePlaylist/:id',(req, res)=>{
+    // Adjusting current user for update
     currentUser.playlists.splice(req.params.id, 1);
+    // Updating DB
     User.findByIdAndUpdate(currentUser._id, currentUser, {new:true}, (err,updatedUser)=>{});
     res.redirect('/profile/:id/settings');
 });
     // Create user playlist
 app.put('/createPlaylist', (req,res)=>{
+    // adjusting currentUser for update
     req.body.songs=[];
     currentUser.playlists.push(req.body);
+    // updating DB
+    User.findByIdAndUpdate(currentUser._id, currentUser, {new:true}, (err,updatedUser)=>{});
+    res.redirect('/profile/:id/');
+});
+    // Edit user playlist
+app.put('/editPlaylist/:id', (req, res)=>{
+    // edit currentUser
+    currentPlaylist.name =req.body.name
+    for(let i=0;i<req.body.songs.length;i++) {
+        let matchIndex = currentPlaylist.songs.findIndex(song => 
+            {return song._id === req.body.songs[i]});
+        console.log(matchIndex)
+        currentPlaylist.songs.splice(matchIndex, 1)
+    }
+    // change currentUser
+    currentUser.playlists[req.params.id] = currentPlaylist
+    // update DB
     User.findByIdAndUpdate(currentUser._id, currentUser, {new:true}, (err,updatedUser)=>{});
     res.redirect('/profile/:id/');
 });

@@ -5,13 +5,70 @@
     <%-include('./partials/navbar.ejs')%>
     <div>
         <img src="" alt="Standard Image">
-        <h3><%currentPlaylist.name%></h3>
-        <form action="">
-            <button type="submit">Edit</button>
-        </form>
+        <h3><%=currentPlaylist.name%></h3>
+        <% if(currentUser.playlists.includes(currentPlaylist)){ %>
+            <button>Edit</button>
+        <% } %>
+        <!-- edit Modal -->
+        <div class="editPlaylist-modal">
+            <form action="/editPlaylist/<%=id%>?_method=PUT" method="POST">
+                <% if(currentPlaylist.name ==='Favorites' || currentPlaylist.name ==='Weekly Adventure') { %>
+                    <h3><%=currentPlaylist.name%></h3>
+                    <input type="hidden" name="name" value="<%=currentPlaylist.name%>">
+                <% } else { %>
+                    <input type="text" name="name" value="<%=currentPlaylist.name%>">
+                <% } %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>Title</th>
+                            <th>Artist</th>
+                            <th>Album</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <% for(let i=0; i<currentPlaylist.songs.length;i++){ %>
+                        <th><%=i+1%></th>
+                        <th>album cover</th>
+                        <th><%=currentPlaylist.songs[i].title%></th>
+                        <th><%=currentPlaylist.songs[i].artist%></th>
+                        <th><%=currentPlaylist.songs[i].album%></th>
+                        <th><input type="checkbox" name="songs[<%=i%>]" value="<%=currentPlaylist.songs[i]._id%>"></th>
+                    <% } %>
+                </table>
+                <input type="hidden" name="songs[<%=currentPlaylist.songs.length%>]" value="">
+                <input type="submit" value="Confirm Changes">
+            </form>
+        </div>
     </div>
     <div>
-        
+        <table>
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Artist</th>
+                    <th>Album</th>
+                    <th>Genre</th>
+                </tr>
+            </thead>
+            <% for(let i=0; i<currentPlaylist.songs.length;i++){ %>
+                <th><%=i+1%></th>
+                <th>
+                    <form action="/" method="POST">
+                        <button class='changeSong' type="submit" name='song' value='<%=currentPlaylist.songs[i].mp3%>'>
+                            <img src="" alt="Album Cover">
+                        </button>
+                    </form>
+                </th>
+                <th><%=currentPlaylist.songs[i].title%></th>
+                <th><%=currentPlaylist.songs[i].artist%></th>
+                <th><%=currentPlaylist.songs[i].album%></th>
+                <th><%=currentPlaylist.songs[i].genre%></th>
+            <% } %>
+        </table>
     </div>
 </body>
 </html>

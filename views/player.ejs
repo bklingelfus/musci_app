@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/setup.ejs')%>
+<body id="player-body">
+    <script>window.onload = function() {
+        if(!window.location.hash) {
+            window.location = window.location + '#loaded';
+            window.location.reload();
+        }
+    }</script>
+    <figure id="footer">
+        <figcaption>Listening:</figcaption>
+        <%console.log(currentSong)%>
+        <audio id="audio" controls autoplay>
+            <source id="background-music" src='<%=currentSong%>' type="audio/mpeg">
+        </audio>
+        <script>
+            const $audio = document.getElementById("audio");
+            $audio.volume = 0.2;
+        </script>
+    </figure>
+</body>
+</html>
