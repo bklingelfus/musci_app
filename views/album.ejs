@@ -3,6 +3,40 @@
 <%-include('./partials/setup.ejs')%>
 <body>
     <%-include('./partials/navbar.ejs')%>
-    <h3>You are in Album</h3>
+    <button onclick="history.back()">Go Back</button>
+    <h3><%=album%></h3>
+    <form action="/" method="POST">
+        <button class='changeSong' type="submit" name='song' value='<%=albumSongs[0].mp3 %>'>
+            <img src="" alt="Album Cover">
+        </button>
+    </form>
+    <h4><a href="/<%=artist%>/"><%=artist%></a></h3>
+    <h4>Songs:</h4>
+    <table>
+        <thead>
+            <tr> 
+                <th>#</th>
+                <th></th>
+                <th>Title</th>
+                <th></th>
+            </tr>
+        </thead>
+        <% for(let i=0;i<albumSongs.length; i++){ %>
+            <tr> 
+                <th><%=i+1%></th>
+                <th>
+                    <form action="/" method="POST">
+                        <button class='changeSong' type="submit" name='song' value='<%=albumSongs[i].mp3%>'>
+                            <img src="" alt="Album Cover">
+                        </button>
+                    </form>
+                </th>
+                <th><%=albumSongs[i].title%></th>
+                <th></th>
+            </tr>
+        <% } %>
+    </table>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

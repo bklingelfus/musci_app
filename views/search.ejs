@@ -7,6 +7,35 @@
         <input type="text" name="search" placeholder="song, artist, album, ...">
         <input id='submitSearch' type="submit" value="Search">
     </form>
-    <iframe name='showSearch' src="/search/result" frameborder="0" style="width: 100%;"></iframe>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th></th>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th></th>
+            </tr>
+        </thead>
+        <% for(let i=0; i<songs.length && i<10;i++){ %>
+            <tr>
+                <td>
+                    <form action="/" method="POST">
+                        <button type="submit" class='changeSong' name='song' value='<%=songs[i].mp3%>'>
+                            <img src="" alt="Album Cover">
+                        </button>
+                    </form>
+                </td>
+                <td><a href="/song/<%=songs[i]._id%>"><%=songs[i].title%></a></td>
+                <td>
+                    <% for(let e=0;e<songs[i].artist.length;e++){ %>
+                        <a href="/<%=songs[i].artist[e]%>"><%=songs[i].artist[e]%></a>
+                    <% } %>
+                </td>
+                <td><a href="/<%=songs[i].artist[0]%>/<%=songs[i].album%>"><%=songs[i].album%></a></td>
+                <th></th>
+            </tr>
+        <% } %>
+    </table>
 </body>
 </html>

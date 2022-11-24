@@ -3,6 +3,7 @@
     <%- include('./partials/setup.ejs')%>
 <body>
     <%- include('./partials/navbar.ejs')%>
+    <button onclick="history.back()">Go Back</button>
     <form action="/" method="POST">
         <button class='changeSong' type="submit" name='song' value='<%=song.mp3%>'>
             <img src="" alt="Album Cover">
@@ -14,7 +15,7 @@
             <td>Artist:</td>
             <td>
                 <% for(let i=0; i<song.artist.length;i++){ %>
-                    <a href="/<%=song.artist[0]%>/"><%=song.artist[0]%></a>
+                    <a href="/<%=song.artist[i]%>/"><%=song.artist[i]%></a>
                 <% } %>
             </td>
         </tr>
@@ -37,6 +38,17 @@
             <td><%=song.genre%></td>
         </tr>
     </table>
+    <h4>Upcoming Events of <%=song.genre%> Music near you</h4>
+    <div>
+        <% for(let i=0; i<2;i++){ %>
+            <div>
+                <h5>Event Name</h5>
+                <img src="" alt="Artist Img">
+                <p>Event information</p>
+                <div class="Google maps"></div>
+            </div>
+        <% }%>
+    </div>
     <% for(let i=0; i<song.artist.length;i++){ %>
         <h4>Upcoming Events featuring <%=song.artist[i]%></h4>
         <div>
@@ -50,16 +62,5 @@
             <% }%>
         </div>
     <% } %>
-    <h4>Upcoming Events of <%=song.genre%> Music near you</h4>
-        <div>
-            <% for(let i=0; i<2;i++){ %>
-                <div>
-                    <h5>Event Name</h5>
-                    <img src="" alt="Artist Img">
-                    <p>Event information</p>
-                    <div class="Google maps"></div>
-                </div>
-            <% }%>
-        </div>
 </body>
 </html>

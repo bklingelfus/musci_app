@@ -3,13 +3,76 @@
 <%- include('./partials/setup.ejs')%>
 <body>
     <%- include('./partials/navbar.ejs')%>  
-    <% for(let i=0;i<songs.length;i++){ %>
-        <a href="/song/<%=songs[i]._id%>">Song Info</a>  
-        <!-- <a href="#" onclick="top.window.location.href='/';" target="_top"> -->
-            <form action="/" method="POST">
-                <input class='changeSong' type="submit" name='song' value='<%=songs[i].mp3%>'>
-            </form>
-        <!-- </a> -->
+    <% if(currentUser._id ==='0'){ %>
+        <h3>Your Playlists</h3>
+        <h4>Log in for custom content!</h4>
+        <h3>Recommended Playlists</h3>
+        <div>
+            <% for(let i=0; i<3;i++){ %>
+                <div>
+                    <form action="" method="">
+                        <button type="submit">
+                            <img src="" alt="Playlist Img">
+                        </button>
+                    </form>
+                    <a href="">App Generated Playlist</a>
+                </div>
+            <% }%>
+        </div>
+        <h3>Upcoming Events </h3>
+        <div>
+            <% for(let i=0; i<2;i++){ %>
+                <div>
+                    <h5>Event Name</h5>
+                    <img src="" alt="Artist Img">
+                    <p>Event information</p>
+                    <div class="Google maps"></div>
+                </div>
+            <% }%>
+        </div>
+    <% } else { %>
+        <h3>Your Playlists</h3>
+        <div>
+            <% for(let i=0; i<currentUser.playlists.length;i++){ %>
+                <div>
+                    <form action="" method="">
+                        <button type="submit">
+                            <img src="" alt="Playlist Img">
+                        </button>
+                    </form>
+                    <a href="/playlist/<%=i%>"><%= currentUser.playlists[i].name%></a>
+                </div>
+            <% } %>
+        </div>
+        <h3>Recommended Playlists</h3>        
+        <div>
+            <% if(currentUser.genrePreferences.length ===0){ %>
+                <p>Change your music preferences for a better experience!</p>
+            <% } %>
+            <% for(let i=0; i<currentUser.genrePreferences.length;i++){ %>
+                <% let word =['Trip', 'Road', 'Journey'] %>
+                <% let random = Math.floor(Math.random()*word.length) %>
+                <div>
+                    <form action="" method="">
+                        <button type="submit">
+                            <img src="" alt="Playlist Img">
+                        </button>
+                    </form>
+                    <a href="/playlist/<%=i%>"><%=currentUser.genrePreferences[i]+word[random]%></a>
+                </div>
+            <% } %>
+        </div>        
+        <h3>Upcoming Events </h3>
+        <div>
+            <% for(let i=0; i<2;i++){ %>
+                <div>
+                    <h5>Event Name</h5>
+                    <img src="" alt="Artist Img">
+                    <p>Event information</p>
+                    <div class="Google maps"></div>
+                </div>
+            <% } %>
+        </div>
     <% } %>
 </body>
 </html>

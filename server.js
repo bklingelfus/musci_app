@@ -27,11 +27,10 @@ const genres =[
     'Classical',
 ]
 
-let currentUser = {_id:'0'};
+let currentUser = {_id:'0', genres:[]};
 let currentSong ='';
 let currentPlaylist= '';
 let currentSearch = [];
-let showPlaylist =[];
 
 const capitalize=(string)=> {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -71,12 +70,15 @@ app.get('/home', (req, res)=>{
         console.log(count);
         if( count < 1) {
             console.log('went this way')
-            Song.create(data);
+            for(let i=0;i<5;i++){
+                Song.create(data);
+            }
         } else {
         console.log('Nothing was done');
         }
     });
     Song.find({}, (error, match)=>{
+        console.log(currentUser)
         res.render('home.ejs', {
             songs: match, 
             currentUser
@@ -87,13 +89,8 @@ app.get('/home', (req, res)=>{
 app.get('/search', (req, res)=>{
     res.render('search.ejs', {
         currentUser,
+        songs: currentSearch
     });
-});
-app.get('/search/result', (req, res)=>{
-    res.render('searchResult.ejs', {
-        songs: currentSearch,
-        currentUser,
-    });    
 });
 
 app.get('/profile/:id', (req, res)=>{
@@ -131,17 +128,27 @@ app.get('/song/:id',(req, res)=>{
 
 app.get('/:artist', (req, res)=>{
     Song.find({artist: req.params.artist}, (err, match)=>{
-        res.render('artist.ejs', {
-            currentUser,
-            artistCollection: match
-        })
-    })
+        Song.find({artist: req.params.artist}).distinct('album', (err, result)=>{
+            res.render('artist.ejs', {
+                currentUser,
+                artistCollection: match,
+                albuns: result,
+                artist: req.params.artist
+            });
+        });
+    });
 });
 
 app.get('/:artist/:album', (req, res)=>{
-    res.render('album.ejs', {
-        currentUser
-    })
+    Song.find({artist: req.params.artist, album:req.params.album}).sort({songNum:1}).exec((err, match)=>{
+        console.log(match)
+        res.render('album.ejs', {
+            currentUser,
+            artist: req.params.artist,
+            album: req.params.album,
+            albumSongs: match
+        });
+    });
 });
 
 // - - - - - - - - Pages Actions - - - - - - - - - - -

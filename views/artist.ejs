@@ -3,6 +3,59 @@
 <%-include('./partials/setup.ejs')%>
 <body>
     <%-include('./partials/navbar.ejs')%>
+    <button onclick="history.back()">Go Back</button>
     <h3>You are in Artist</h3>
+    <ion-icon name="person"></ion-icon>
+    <h3><%=artist%></h3>
+    <h4>Top 5:</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th></th>
+                <th>Title</th>
+                <th>Album</th>
+            </tr>
+        </thead>
+        <% for(let i=0; i<artistCollection.length && i<5; i++){ %>
+            <tr>
+                <th><%=i+1%></th>
+                <th>
+                    <form action="/" method="POST">
+                        <button class='changeSong' type="submit" name='song' value='<%=artistCollection[i].mp3%>'>
+                            <img src="" alt="Album Cover">
+                        </button>
+                    </form>
+                </th>
+                <th><%=artistCollection[i].title%></th>
+                <th><%=artistCollection[i].album%></th>
+            </tr>
+        <% } %>
+    </table>
+    <div>
+        <h4>Albuns:</h4>
+        <% for(let i=0; i<albuns.length;i++){ %>
+            <% let info = artistCollection.find(e=> e.albuns ===albuns[i]) %>
+            <form action="/" method="POST">
+                <button class='changeSong' type="submit" name='song' value='<%=artistCollection[i].mp3%>'>
+                    <img src="" alt="Album Cover">
+                </button>
+            </form>
+            <a href="/<%=artist%>/<%=albuns[i]%>"><%=albuns[i]%></a>
+        <% } %>
+    </div>
+    <h4>Upcoming Events featuring <%=artist%></h4>
+    <div>
+        <% for(let i=0; i<2;i++){ %>
+            <div>
+                <h5>Event Name</h5>
+                <img src="" alt="Artist Img">
+                <p>Event information</p>
+                <div class="Google maps"></div>
+            </div>
+        <% }%>
+    </div>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
