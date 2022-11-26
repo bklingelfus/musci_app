@@ -1,13 +1,71 @@
-*{border: 1px solid black;}
+/* =================================================== */
+/* - - - - - - - - - - - TOOLS - - - - - - - - - - -  */
+/* =================================================== */
+:root {
+    /* light */
+    --L1: #282839;
+    --L2: #45467b;
+    --L3: #555e67;
+    --L4: #ff2947;
+    --L5: #ff3f87;
+    --L6: #fec300;
+    --L7: #eaeaea;
+    --L8: #9ea5ad;
+    --L9: #d3d0d0;
+    /* dark */
+    /* variable */
+    --mainText: var(--L3);
+    --text: var(--L8);
+    --lineGradient: linear-gradient(45deg,var(--L1),var(--L4), var(--L6), var(--L4),var(--L1));
+    --footer: var(--L7);
+    --background: white;
+    --cardColor: var(--L9);
+}
+
+/* *{border: 1px solid black;} */
 
 html, body {
     margin: 0;
     padding: 0;
+    height: 100%;
+    width: 100%;
+    background: var(--background);
+}
+
+/* =================================================== */
+/* - - - - - - - - - - - INDEX - - - - - - - - - - - - */
+/* =================================================== */
+#current {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 89vh;
+}
+#iframe-player {
+    padding: 0;
+    margin: 0;
+    height: 10vh;
+    width: 100%;
 }
 
 /* =================================================== */
 /* - - - - - - - - - - - NAVBAR - - - - - - - - - - -  */
 /* =================================================== */
+#header {
+    display: flex; 
+    flex-direction: column;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    background-color: var(--background);
+}
+#line{
+    width: 100%; height: 0.5vh;
+    background: var(--lineGradient);
+    background-size: 200% 200%;
+    animation: gradient 10s ease infinite;
+}
 #navbar {
     display: flex;
     justify-content: space-between;
@@ -15,38 +73,260 @@ html, body {
     height: 10vh;
     width: 100%;
 }
-    .side {margin: auto 3vw;}
-    #button-space {display: flex;}
-        #button-space div {
-            display: flex;
-            width: 15vw;
+
+.side {margin: auto 3vw;}
+    .side img {
+        height: 8vh;
+        width: auto;
+    }
+        .side img:hover {
+            box-shadow: 0 0 0 0 var(--L4);
+            transform: scale(1);
+            animation: pulse-gradient 2s infinite;
         }
-            .nav-button {
-                margin-left: auto;
-                margin-right: auto;
+    .side ion-icon {
+        font-size: 3em;
+        color: var(--mainText);
+        border-radius: 50%;
+    }
+        .side ion-icon:hover {
+            box-shadow: 0 0 0 0 var(--L4);
+            transform: scale(1);
+            animation: pulse-gradient 2s infinite;
+        }
+
+#button-space {display: flex;}
+    #button-space div {
+        display: flex;
+        width: 16vw;
+    }
+        .nav-button {
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.5em;
+            color: var(--mainText);
+        }
+            .nav-button:hover{
+                text-decoration: none;
+                background: var(--lineGradient);
+                background-size: 200% 200%;
+                -webkit-background-clip: text;
+                color: transparent;
+                animation: gradient 5s ease infinite;
+            }
+            .nav-button:hover > ion-icon {
+                color: var(--L4);
+            }
+            .nav-button ion-icon {
+                font-size: 1.2em;
+                margin-right: 1vw;
+                vertical-align: middle;
             }
 
-
 /* =================================================== */
-/* - - - - - - - - - - - INDEX - - - - - - - - - - - - */
+/* - - - - - - - - - - - PLAYER - - - - - - - - - - -  */
 /* =================================================== */
-#current {
-    padding: 0;
-    width: 100%;
-    height: 85vh;
-}
-#iframe-player {
-    height: 10vh;
-}
-
-/* =================================================== */
-/* - - - - - - - - - - - INDEX - - - - - - - - - - - - */
-/* =================================================== */
-
 #footer {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 100%;
     height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: var(--footer);
+    border-top: 2px solid var(--mainText);
+}
+#music-info {display: flex;margin-left: 2vw;}
+    #albumCover img{
+        height: 70px;
+        width: auto;
+    }
+    #info button{
+        background-color: transparent;
+        color: var(--mainText);
+        border: none;
+    }
+        #info button:hover {
+            text-decoration: underline;
+        }
+        .player-song {
+            font-weight: bold;
+        }
+
+/* =================================================== */
+/* - - - - - - - - - - - HOME - - - - - - - - - - - -  */
+/* =================================================== */
+#home-page{margin-top: 15vh;}
+#home-page h3 {
+    color: var(--mainText);
+    margin: 5vh 5vw 2vh;
+    padding-left: 1vw;
+    /* box-shadow: 10px 0 5px -2px var(--background) inset; */
+    background: linear-gradient(90deg, var(--text), var(--background));
+}
+#home-page h4 {
+    color: var(--text);
+    margin: auto 5vw;
+}
+#home-page h5 {
+    color: var(--mainText);
+    margin: auto 5vw;
+}
+#home-page p {
+    color: var(--text);
+    margin: auto 5vw;
+}
+    .playlist-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin: auto 5vw;
+    }
+        .playlist-card {
+            width: 200px;
+            height: 210px;
+            margin-right: 5vw;
+            margin-bottom: 3vh;
+            background: var(--footer);
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            box-shadow: 3px 3px 3px 3px var(--text);
+        }
+        .playlist-card button {
+            width: 95%;
+            height: 170px;
+            margin: 5px;
+            border-radius: 1vh;
+            background-color: var(--cardColor);
+            border: none;
+        }
+        .playlist-card img {
+            width: 90%;
+            height: auto;
+        }
+        .playlist-card a {
+            color: var(--mainText);
+            font-weight: bold;
+        }
+            .playlist-card a:hover{
+                background: var(--lineGradient);
+                background-size: 200% 200%;
+                -webkit-background-clip: text;
+                color: transparent;
+                animation: gradient 5s ease infinite;
+            }
+            .playlist-card:hover{
+                box-shadow: 0 0 0 0 var(--L4);
+                transform: scale(1);
+                animation: pulse-gradient 2s infinite;
+            }
+            .hover-play {
+                visibility: hidden;
+                position: absolute;
+                background-color: rgba(0, 0, 0, 0.232);
+                top: 0;
+                right: 0;
+                height: 85%;
+                width: 100%;
+            }
+            .hover-play ion-icon {
+                font-size: 5em;
+                color: var(--background);
+                margin-top: 25%;
+            }
+                .playlist-card:hover div {
+                    visibility: visible;
+                }
+    .event-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin: auto 5vw;
+    }
+        .event-card {
+            width: 220px;
+            height: 300px;
+            margin-right: 5vw;
+            margin-bottom: 3vh;
+            background: var(--footer);
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            box-shadow: 3px 3px 3px 3px var(--text);
+        }
+        .event-card img {
+            width: 90%;
+            height: auto;
+            margin: auto;
+        }
+        .event-card a {
+            color: var(--mainText);
+        }
+            .event-card a:hover{
+                background: var(--lineGradient);
+                background-size: 200% 200%;
+                -webkit-background-clip: text;
+                color: transparent;
+                animation: gradient 5s ease infinite;
+            }
+            .event-card:hover{
+                box-shadow: 0 0 0 0 var(--L4);
+                transform: scale(1);
+                animation: pulse-gradient 2s infinite;
+            }
+
+/* =================================================== */
+/* - - - - - - - - - - ANIMATION - - - - - - - - - - - */
+/* =================================================== */
+
+@keyframes gradient {
+	0% {
+		background-position: 50% 0%;
+	}
+    25% {
+		background-position: 100% 100%;
+	}
+	50% {
+		background-position: 50% 0%;
+	}
+    75% {
+		background-position: 0% -100%;
+	}
+	100% {
+		background-position: 50% 0%;
+	}
+}
+@keyframes pulse-black {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
+@keyframes pulse-gradient {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 #ff29467c;
+	}
+	50% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px #fec3003d;
+	}
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px #fec30017;
+	}
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 #fec30000;
+	}
 }

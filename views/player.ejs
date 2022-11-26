@@ -9,15 +9,46 @@
         }
     }</script>
     <figure id="footer">
-        <figcaption>Listening:</figcaption>
-        <%console.log(currentSong)%>
-        <audio id="audio" controls autoplay>
+        <div id="music-info">
+            <div id="albumCover">
+                <img src="/songs/Linkin_Park-METEORA.jpeg" alt="Album Cover">
+            </div>
+            <div id="info">
+                <div id="currentSong">
+                    <button class="player-song" value="">song title</button>
+                </div>
+                <div id="currentPlaylist">
+                    <button class="player-playlist" value="">playlist</button>
+                </div>
+            </div>
+        </div>
+        <audio id="audio">
+            <p>Your browser does not support the audio element</p>
+            <source id="background-music" src='/songs/Linkin_Park-Numb.mp3' type="audio/mpeg">
             <source id="background-music" src='<%=currentSong%>' type="audio/mpeg">
         </audio>
+        <div>
+            <div>
+                <button id="backplayer"><ion-icon name="play-back-sharp"></ion-icon></button>
+                <button id="play-pause"><ion-icon name="logo-google-playstore"></ion-icon></button>
+                <button id="nextplayer"><ion-icon name="play-forward-sharp"></ion-icon></button>
+            </div>
+            <div>
+                <span id="currentTime">0</span>
+                <input type="range" id="time-slider">
+                <span id="totalTime">0</span>
+            </div>
+        </div>
+        <div id="volume">
+            <button id="mute"><ion-icon name="mic"></ion-icon></button>
+            <input type="range" id="volume-slider" value="20">
+        </div>
         <script>
             const $audio = document.getElementById("audio");
             $audio.volume = 0.2;
         </script>
     </figure>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

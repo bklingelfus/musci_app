@@ -1,21 +1,24 @@
-<nav id="navbar">
-    <div class="side">
-        <a href="/home">
-            <img src="./site/logo.jpeg" alt="App Logo">
-        </a>
-    </div>
-    <div id="button-space">
-        <div>
-            <a class='nav-button' href="/home">Home</a>
+<section id="header">
+    <nav id="navbar">
+        <div class="side">
+            <a href="/home">
+                <img src="/site/logo.png" alt="App Logo">
+            </a>
         </div>
-        <div>
-            <a class='nav-button' href="/search">Search</a>
+        <div id="button-space">
+            <div>
+                <a class='nav-button' href="/home"><ion-icon name="grid-outline"></ion-icon>Home</a>
+            </div>
+            <div>
+                <a class='nav-button' href="/search"><ion-icon name="search"></ion-icon>Search</a>
+            </div>
+            <div>
+                <a class='nav-button' href="/profile/<%=currentUser._id%>"><ion-icon name="earth"></ion-icon>My World</a>
+            </div>
         </div>
-        <div>
-            <a class='nav-button' href="/profile/<%=currentUser._id%>">My World</a>
+        <div class="side">
+            <a href="/profile/<%=currentUser._id%>/settings"><ion-icon name="person-circle-outline"></ion-icon></a>
         </div>
-    </div>
-    <div class="side">
-        <a href="/profile/<%=currentUser._id%>/settings">Profile Settings</a>
-    </div>
-</nav>
+    </nav>
+    <div id="line"></div>
+</section>
