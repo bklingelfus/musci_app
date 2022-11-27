@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <%-include('./partials/setup.ejs')%>
-<body>
+<body id="settings-page">
     <%- include('./partials/navbar.ejs')%>
     <% if(currentUser._id==='0'){ %>
-    <div>
+    <div id="welcome">
+        <h1>Welcome to Music App!</h1>
+    </div>
+    <div id="user-img">
         <ion-icon name="person-circle-outline"></ion-icon>
     </div>
-    <h1>Welcome to Music App!</h1>
     <form action="/createUser" method="POST">
-        <input type="text" name="username" value="username<%=Math.floor(Math.random()*10000)%>">
-        <input type="password" name="password" placeholder="password">
-        Are you a creator? <input type="checkbox" name="creator">
-        <p>Favorite Genres:</p>
+        <input class='user-text' type="text" name="username" value="username<%=Math.floor(Math.random()*1000000)%>"></br>
+        <input class='user-text' type="password" name="password" placeholder="password"></br>
+        Are you a creator? <input type="checkbox" name="creator"></br>
+        <h5>Favorite Genres:</h5>
         <div>                
             <%for(let i=0; i< genres.length; i++){ %>
-                <%=genres[i]%> <input type="checkbox" name="genrePreferences[<%=i%>]" value="<%=genres[i]%>">
+                <%=genres[i]%> <input type="checkbox" name="genrePreferences[<%=i%>]" value="<%=genres[i]%>"><%if(i%3===2){%></br><%}%>
             <%}%>
         </div>
-        <input type="submit" value="Create Account">
+        <button class='create-user' type="submit">Create Account!</button>
     </form>
     <% } else { %>
-    <div>
+    <div id="login-settings">
         <div id="settingsOptions">
             <% if(currentUser.userPhoto===''){%>
                 <div>
@@ -30,46 +32,47 @@
             <% } else { %>
                 <img src="<%=currentUser.userPhoto%>" alt="User Photo">
             <% } %>
-            <h1><%=currentUser.username%></h1>
-            <ul>
-                <li>Edit Profile</li>
-                <li>General Settings</li>
-                <li>Delete Profile</li>
-            </ul>
+            <h3><%=currentUser.username%></h3>
+            <p id="edit-profile-button">Edit Profile</p>
+            <p id="general-settings-button">General Settings</p>
+            <h6 id="delete-profile-button">Delete Profile</h6>
         </div>
         <div id="settingsDisplay">
-            <div id="editProfile">
+            <section id="editProfile">
                 <form action="/editUser/<%=currentUser._id%>?_method=PUT" method="POST">
-                    <input type="text" name="username" value="<%=currentUser.username%>">
-                    <input type="password" name="password" value="<%=currentUser.password%>">
+                    <input class='user-text' type="text" name="username" value="<%=currentUser.username%>">
+                    <input class='user-text' type="password" name="password" value="<%=currentUser.password%>">
+                    <input class='user-text' type="text" name="userPhoto" placeholder="url to photo"></br>
                     Creator check <input type="checkbox" name="creator" <% if(currentUser.creator){%>checked<%}%>>
-                    <input type="text" name="userPhoto" placeholder="url to photo">
-                    <p>Favorite Genres:</p>
+                    <h5>Favorite Genres:</h5>
                     <div>
                         <%for(let i=0; i< genres.length; i++){ %>
-                            <%=genres[i]%> <input type="checkbox" name="genrePreferences[<%=i%>]" value="<%=genres[i]%>" <% if(currentUser.genrePreferences.includes(genres[i])){%>checked<%}%>>
+                            <%=genres[i]%> <input type="checkbox" name="genrePreferences[<%=i%>]" value="<%=genres[i]%>" <% if(currentUser.genrePreferences.includes(genres[i])){%>checked<%}%>><%if(i%3===2){%></br><%}%>
                         <%}%>
                     </div>
-                    <input type="submit" value="Confirm Edit">
+                    <input class="btn btn-outline-info" type="submit" value="Confirm Edit">
                 </form>
-                <p>Playlists:</p>
+                <h5>Playlists:</h5>
                 <div>
                     <%for(let i=0; i< currentUser.playlists.length; i++){ %>
-                        <form action="/deletePlaylist/<%=i%>?_method=PUT" method="POST">
-                            <%=currentUser.playlists[i].name%> <%if (i>1){%><button type="submit"><ion-icon name="trash-outline"></ion-icon></button><%}%>
-                        </form>
+                        <div class="playlist-holder">
+                            <p><%=currentUser.playlists[i].name%> </p>
+                            <form action="/deletePlaylist/<%=i%>?_method=PUT" method="POST">
+                                <%if (i>1){%><button type="submit"><ion-icon name="trash-outline"></ion-icon></button><%}%>
+                            </form>
+                        </div>
                     <%}%>
                 </div>
-            </div>
-            <div id="generalSettings">
+            </section>
+            <section id="generalSettings">
                 <p>Some general settings adjustments that will be added further in the future</p>
-            </div>
-            <div id="deleteProfile">
+            </section>
+            <section id="deleteProfile">
                 <p>This action will <span>permanently</span> delete all of your info including all your favorite songs as well as any other changes you might have made</p>
                 <form action="/reset/<%=currentUser._id%>/?_method=DELETE" method="POST">
-                    <input type="submit" value="Delete Anyway">
+                    <input class="btn btn-outline-danger" type="submit" value="Delete Anyway">
                 </form>
-            </div>
+            </section>
         </div>
     </div>
     <% } %>

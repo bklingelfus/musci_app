@@ -1,75 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <%-include('./partials/setup.ejs')%>
-<body>
+<body id="playlist-page">
     <%-include('./partials/navbar.ejs')%>
-    <div>
-        <img src="" alt="Standard Image">
-        <h3><%=currentPlaylist.name%></h3>
+    <div class="playlist-info">
+        <img src="/site/playlist.png" alt="Standard Image">
+        <h2><%=currentPlaylist.name%></h2>
         <% if(currentUser.playlists.includes(currentPlaylist)){ %>
-            <button>Edit</button>
+            <button id='modalButton' class="gray"><ion-icon name="create"></ion-icon></button>
         <% } %>
         <!-- edit Modal -->
-        <div class="editPlaylist-modal">
+        <div id="editPlaylist-modal">
             <form action="/editPlaylist/<%=id%>?_method=PUT" method="POST">
                 <% if(currentPlaylist.name ==='Favorites' || currentPlaylist.name ==='Weekly Adventure') { %>
                     <h3><%=currentPlaylist.name%></h3>
                     <input type="hidden" name="name" value="<%=currentPlaylist.name%>">
                 <% } else { %>
-                    <input type="text" name="name" value="<%=currentPlaylist.name%>">
+                    <input class='user-text' type="text" name="name" value="<%=currentPlaylist.name%>">
                 <% } %>
-                <table>
+                <table id="search-table">
                     <thead>
                         <tr>
-                            <th>N°</th>
-                            <th>Title</th>
-                            <th>Artist</th>
-                            <th>Album</th>
-                            <th>Remove</th>
+                            <th>#</th>
+                            <th class="mid-th"></th>
+                            <th class="mid-th">Title</th>
+                            <th class="mid-th">Artist</th>
+                            <th class="mid-th">Album</th>
+                            <th>Genre</th>
                         </tr>
                     </thead>
                     <% for(let i=0; i<currentPlaylist.songs.length;i++){ %>
-                        <th><%=i+1%></th>
-                        <th>album cover</th>
-                        <th><%=currentPlaylist.songs[i].title%></th>
-                        <th><%=currentPlaylist.songs[i].artist%></th>
-                        <th><%=currentPlaylist.songs[i].album%></th>
-                        <th><input type="checkbox" name="songs[<%=i%>]" value="<%=currentPlaylist.songs[i]._id%>"></th>
+                        <tr>
+                            <td><%=i+1%></td>
+                            <td class="album-td">
+                                <div class="song-cover">
+                                    <form action="/" method="POST">
+                                        <button class='changeSong' type="submit" name='song' value='<%=currentPlaylist.songs[i].mp3%>'>
+                                            <img src="" alt="Album Cover">
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                            <td><a href="/song/<%=currentPlaylist.songs[i]._id%>"><%=currentPlaylist.songs[i].title%></a></td>
+                            <td>
+                                <% for(let e=0;e<currentPlaylist.songs[i].artist.length;e++){ %>
+                                    <a href="/<%=currentPlaylist.songs[i].artist[e]%>"><%=currentPlaylist.songs[i].artist[e]%></a>
+                                <% } %>
+                            </td>
+                            <td><a href="/<%=currentPlaylist.songs[i].artist[0]%>/<%=currentPlaylist.songs[i].album%>"><%=currentPlaylist.songs[i].album%></a></td>
+                            <td><a href=""><%=currentPlaylist.songs[i].genre%></a></td>
+                            <td><input type="checkbox" name="songs[<%=i%>]" value="<%=currentPlaylist.songs[i]._id%>"></td>
+                        </tr>
                     <% } %>
                 </table>
                 <input type="hidden" name="songs[<%=currentPlaylist.songs.length%>]" value="">
-                <input type="submit" value="Confirm Changes">
+                <input class="btn btn-outline-info" type="submit" value="Confirm Changes">
             </form>
         </div>
     </div>
-    <div>
-        <table>
+    <div id="songs">
+        <table id="search-table">
             <thead>
                 <tr>
-                    <th>N°</th>
-                    <th></th>
-                    <th>Title</th>
-                    <th>Artist</th>
-                    <th>Album</th>
+                    <th>#</th>
+                    <th class="mid-th"></th>
+                    <th class="mid-th">Title</th>
+                    <th class="mid-th">Artist</th>
+                    <th class="mid-th">Album</th>
                     <th>Genre</th>
                 </tr>
             </thead>
             <% for(let i=0; i<currentPlaylist.songs.length;i++){ %>
-                <th><%=i+1%></th>
-                <th>
-                    <form action="/" method="POST">
-                        <button class='changeSong' type="submit" name='song' value='<%=currentPlaylist.songs[i].mp3%>'>
-                            <img src="" alt="Album Cover">
-                        </button>
-                    </form>
-                </th>
-                <th><%=currentPlaylist.songs[i].title%></th>
-                <th><%=currentPlaylist.songs[i].artist%></th>
-                <th><%=currentPlaylist.songs[i].album%></th>
-                <th><%=currentPlaylist.songs[i].genre%></th>
+                <tr>
+                    <td><%=i+1%></td>
+                    <td class="album-td">
+                        <div class="song-cover">
+                            <form action="/" method="POST">
+                                <button class='changeSong' type="submit" name='song' value='<%=currentPlaylist.songs[i].mp3%>'>
+                                    <img src="" alt="Album Cover">
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                    <td><a href="/song/<%=currentPlaylist.songs[i]._id%>"><%=currentPlaylist.songs[i].title%></a></td>
+                    <td>
+                        <% for(let e=0;e<currentPlaylist.songs[i].artist.length;e++){ %>
+                            <a href="/<%=currentPlaylist.songs[i].artist[e]%>"><%=currentPlaylist.songs[i].artist[e]%></a>
+                        <% } %>
+                    </td>
+                    <td><a href="/<%=currentPlaylist.songs[i].artist[0]%>/<%=currentPlaylist.songs[i].album%>"><%=currentPlaylist.songs[i].album%></a></td>
+                    <td><a href=""><%=currentPlaylist.songs[i].genre%></a></td>
+                </tr>
             <% } %>
         </table>
     </div>
+<script>
+    const $modal = document.getElementById('editPlaylist-modal')
+    const $songs = document.getElementById('songs')
+    const $modalButton = document.getElementById('modalButton')
+    console.log('pizza')
+        let e =0;
+    $modalButton.addEventListener('click', function(){
+        if (e===0){
+            console.log('changing')
+            $modal.setAttribute('style', 'display: block;')
+            $songs.setAttribute('style', 'display: none;')
+            $modalButton.setAttribute('class', 'red')
+            $modalButton.innerHTML = '<ion-icon name="close"></ion-icon>'
+            e+=1
+        } else {
+            console.log('resetting')
+            $modal.setAttribute('style', 'display: none;')
+            $songs.setAttribute('style', 'display: block;')
+            $modalButton.setAttribute('class', 'gray')
+            $modalButton.innerHTML = '<ion-icon name="create"></ion-icon>'
+            e-=1
+        }
+    });
+</script>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>

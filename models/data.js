@@ -94,7 +94,7 @@ module.exports = [
         title: 'STAY',
         artist: ['The Kid LAROI', 'Justin Bieber'],
         album: 'STAY - Single',
-        albumCover: '/songs/The_Kid_LAROI-STAY.jpeg',
+        albumCover: '/songs/The_Kid_LAROI-STAY.webp',
         mp3: '/songs/The_Kid_LAROI-Stay.mp3',
         genre: 'Pop',
         songNum: '1',

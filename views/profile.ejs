@@ -1,37 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('./partials/setup.ejs')%>
-<body>
+<body id="profile-page">
     <%- include('./partials/navbar.ejs')%>
-    <h2>My Playlists</h2>
+    <h3>My Playlists</h3>
     <% if(currentUser._id==='0'){ %>
         <h4>Too bad you're not logged in ... :( </h4>
     <% } else { %>
-        <div>
+        <div class="playlist-container">
             <% for(let i=0;i<currentUser.playlists.length;i++){ %>
-                <form action="/changePlaylist/<%=i%>" method="POST">
-                    <button type='submit'><img src="" alt="Playlist Image"></button>
-                    <a href="/playlist/<%=i%>"><%=currentUser.playlists[i].name%></a>
-                    <p><%=currentUser.playlists[i].songs.length%> songs</p>
-                </form>
+                <div class="playlist-card minePlaylist">
+                    <form action="/changePlaylist/<%=i%>" method="POST">
+                        <button type='submit'><img src="/site/playlist.png" alt="Playlist Image"></button>
+                        <a href="/playlist/<%=i%>"><%=currentUser.playlists[i].name%></a>
+                        <p><%=currentUser.playlists[i].songs.length%> songs</p>
+                    </form>
+                </div>
             <% } %>
-                <form action="/createPlaylist?_method=PUT" method="POST">
-                    <input type="text" name="name" value="new playlist">
-                    <button type="submit">Create Playlist</button>
+                <form class='create-playlist' action="/createPlaylist?_method=PUT" method="POST">
+                    <input class='input-text' type="text" name="name" placeholder="new playlist name">
+                    <button class='create-button' type="submit"><ion-icon name="add-outline"></ion-icon></button>
                 </form>
         </div>
     <% } %>
-    <h2>Recommended Events</h2>
+    <h3>Recommended Events</h3>
     <% if(currentUser._id==='0'){ %>
         <h4>Too bad you're not logged in ... :( </h4>
     <% } else { %>
-        <div>
+        <div class="event-container">
             <% for(let i=0; i<2;i++){ %>
-                <div>
+                <div class="event-card">
                     <h5>Event Name</h5>
-                    <img src="" alt="Artist Img">
+                    <img src="/site/event-2.png" alt="Artist Img">
                     <p>Event information</p>
-                    <div class="Google maps"></div>
+                    <div class="Google maps">Location</div>
                 </div>
             <% }%>
         </div>

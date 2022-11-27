@@ -12,14 +12,26 @@
     --L7: #eaeaea;
     --L8: #9ea5ad;
     --L9: #d3d0d0;
+    --L10: white;
     /* dark */
     /* variable */
-    --mainText: var(--L3);
-    --text: var(--L8);
+    --F1: var(--L1);
+    --F2: var(--L2);
+    --F3: var(--L3);
+    --F4: var(--L4);
+    --F5: var(--L5);
+    --F6: var(--L6);
+    --F7: var(--L7);
+    --F8: var(--L8);
+    --F9: var(--L9);
+    --F10: var(--L10);
+    --mainText: var(--F3);
+    --text: var(--F8);
     --lineGradient: linear-gradient(45deg,var(--L1),var(--L4), var(--L6), var(--L4),var(--L1));
-    --footer: var(--L7);
-    --background: white;
-    --cardColor: var(--L9);
+    --lineGradient2: linear-gradient(45deg,var(--L1),var(--L4), var(--L4),var(--L1));
+    --footer: var(--F7);
+    --background: var(--F10);
+    --cardColor: var(--F9);
 }
 
 /* *{border: 1px solid black;} */
@@ -235,7 +247,7 @@ html, body {
                 color: var(--background);
                 margin-top: 25%;
             }
-                .playlist-card:hover div {
+                .playlist-card button:hover .hover-play {
                     visibility: visible;
                 }
     .event-container {
@@ -276,24 +288,387 @@ html, body {
             }
 
 /* =================================================== */
+/* - - - - - - - - - - - PROFILE - - - - - - - - - - - */
+/* =================================================== */
+#profile-page{margin-top: 15vh;}
+#profile-page h3 {
+    color: var(--mainText);
+    margin: 5vh 5vw 2vh;
+    padding-left: 1vw;
+    /* box-shadow: 10px 0 5px -2px var(--background) inset; */
+    background: linear-gradient(90deg, var(--text), var(--background));
+}
+#profile-page h4 {
+    color: var(--text);
+    margin: auto 5vw;
+}
+#profile-page h5 {
+    color: var(--mainText);
+    margin: auto 5vw;
+}
+#profile-page p {
+    color: var(--text);
+    margin: auto 5vw;
+}
+    .minePlaylist {height: 240px;}
+    .create-playlist{
+        display: flex;
+        flex-direction: column;
+        margin: auto 0;
+    }
+        .input-text{
+            border-style: solid;
+            border-color: var(--background);
+            color: var(--text);
+            background-color: var(--footer);
+            text-align: center;
+            padding: 1vh;
+        }
+            .input-text:focus{
+                outline: var(--mainText);
+                color: var(--mainText);
+            }
+        .create-button{
+            border: none;
+            background-color: var(--footer);
+        }
+            .create-playlist:hover{
+                box-shadow: 0 0 0 0 var(--L4);
+                transform: scale(1);
+                animation: pulse-gradient 2s infinite;
+            }
+            .create-button ion-icon{
+                font-size: 6em;
+                color: var(--mainText);
+            }
+
+/* =================================================== */
+/* - - - - - - - - - - - SEARCH - - - - - - - - - - -  */
+/* =================================================== */
+#search-page{margin-top: 15vh;}
+#search-form{
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+    #search-form input{
+        font-size: 1.5em;
+        width: 60vw;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: 2vw;
+        text-align: center;
+        border-radius: 20px;
+        border: 2px solid var(--mainText);
+    }
+    #search-form button{
+        background: none;
+        border: none;
+        margin-right: auto;
+    }
+        #search-form ion-icon{
+            font-size: 3em;
+            color: var(--mainText);
+            border-radius: 50%;
+        }
+            #search-form ion-icon:hover{
+                box-shadow: 0 0 0 0 var(--L4);
+                transform: scale(1);
+                animation: pulse-gradient 2s infinite;
+            }
+#search-table {
+    margin: 2vh auto;
+    width: 90vh;
+    max-width: 900px;
+}
+    #search-table thead {
+        border-bottom: 2px solid var(--text);
+        color: var(--text);
+        font-size: 1.3em;
+    }
+        #search-table th {
+            padding-left: 1vw;
+        }
+        .mid-th {
+            border-left: 2px solid var(--text);
+            border-right: 2px solid var(--text);
+        }
+        .album-td form{
+            display: flex;
+            justify-content: space-around;
+        }
+            .song-cover button{
+                background: none;
+                border: none;
+            }
+                .song-cover img {
+                    height: 5vh;
+                    min-height: 50px;
+                    width: auto;
+                    margin-left: auto;
+                }
+                    .song-cover img:hover{
+                        box-shadow: 0 0 0 0 var(--L4);
+                        transform: scale(1);
+                        animation: pulse-black 2s infinite;
+                    }
+        #search-table a{
+            color: var(--mainText);
+            margin-left: 1vw;
+        }
+            #search-table a:hover{                
+                background: var(--lineGradient);
+                background-size: 200% 200%;
+                -webkit-background-clip: text;
+                color: transparent;
+                animation: gradient 5s ease infinite;
+            }
+        #search-table tr {
+            border-bottom: 1px solid var(--text);
+        }
+
+/* =================================================== */
+/* - - - - - - - - - - SETTINGS - - - - - - - - - - -  */
+/* =================================================== */
+#settings-page{margin-top: 15vh;}
+#user-img{text-align: center;}
+#user-img ion-icon {font-size: 12em;color: var(--mainText);}
+#welcome {
+    margin: 2vh 5vw;
+    /* box-shadow: 10px 0 5px -2px var(--background) inset; */
+    background: linear-gradient(90deg, var(--background),var(--text), var(--background));
+    text-align: center;
+}
+    #welcome h1{               
+        background: var(--lineGradient2);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: gradient 10s ease infinite;
+    }
+#settings-page form {text-align: center; color: var(--mainText);}
+    #settings-page input {margin: 1vh;}
+    #settings-page button{margin: 3vh;}
+    #settings-page h5 {
+        margin: 1vh auto 0.5vh;
+        color: var(--mainText);
+        text-decoration: underline;
+    }
+    .user-text{
+        width: 30vw;
+        background: var(--footer);
+        color: var(--text);
+        border: epx solid var(--mainText);
+        border-radius: 5px;
+        text-align: center;
+    }
+    .create-user {
+        background: var(--mainText);
+        padding: 1vh 2vw;
+        border: none;
+        color: var(--background);
+        font-weight: bold;
+        font-size: 1.5em;
+    }
+        .create-user:hover {
+            background: var(--F4);
+        }
+#login-settings {
+    display: flex;
+    margin-top: 10vh;
+    text-align: center;
+    align-items: center;
+}
+    #settingsOptions{
+        width: 40vw; 
+        min-width: 240px; 
+        max-width: 400px;
+        margin-left: auto;
+        border-right: 2px solid var(--text);
+    }
+    #settingsOptions ion-icon{
+        font-size: 15em;
+        color: var(--mainText);
+    }
+    #settingsOptions h3 {
+        color: var(--mainText);
+        text-decoration: underline;
+        margin-bottom: 2vh;
+    }
+    #settingsOptions h6{
+        margin: 1vh 3vw;
+        color: var(--text);
+        font-weight: bold;
+        cursor: pointer;
+    }
+        #settingsOptions h6:hover {                
+            background: var(--lineGradient2);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: gradient 10s ease infinite;
+        }
+    
+    #settingsOptions p{
+        margin: 1vh 3vw;
+        color: var(--text);
+        font-weight: bold;
+        cursor: pointer;
+    }
+        #settingsOptions p:hover{
+            color: var(--mainText);
+            text-decoration: underline;
+        }
+    #settingsDisplay {
+        margin-right: auto;
+        padding: 2vh 2vw;
+        border-left: 2px solid var(--text);
+    }
+        #settingsDisplay section {
+            display: none;
+        }
+            #settingsDisplay section:first-of-type {
+                display: block;
+                width: 59vw;
+                background-color: whitesmoke;
+                border-radius: 15px;
+                padding: 2vh;
+            }
+        .playlist-holder {
+            display: flex;
+            /* align-items: center; */
+        }
+            .playlist-holder p {
+                width: 50%;
+                margin: auto 0;
+                margin-left: 25%;
+                color: var(--mainText);
+
+            }
+            .playlist-holder button {
+                border: none;
+                background: transparent;
+                width: 100%;
+                height: 100%;
+                /* margin: 0; */
+                /* height: 7vh; */
+                /* padding: 0; */
+            }
+            .playlist-holder form {
+                /* margin: 0; */
+                /* padding: 0; */
+                height: 8vh;
+            }
+            .playlist-holder ion-icon {
+                /* margin: auto; */
+                /* padding: 0; */
+                color: var(--mainText);
+                font-size: 1.8em;
+            }
+                .playlist-holder ion-icon:hover{
+                    color: var(--F4);
+                    font-size: 2em;
+                }
+    #generalSettings p {
+        color: var(--mainText);
+    }
+    #deleteProfile p {
+        color: var(--mainText);
+    }
+        #deleteProfile span {
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+/* =================================================== */
+/* - - - - - - - - - - PLAYLIST - - - - - - - - - - -  */
+/* =================================================== */
+#playlist-page {margin-top: 15vh; text-align: center;}
+#playlist-page h2 {
+    color: var(--background);
+    margin: 5vh 5vw 2vh;
+    padding-left: 1vw;
+    /* box-shadow: 10px 0 5px -2px var(--background) inset; */
+    background: linear-gradient(90deg, var(--background), var(--text), var(--background));
+}
+    .playlist-info img{
+        width: 30vw;
+        height: auto;
+    }
+    .playlist-info ion-icon {
+        font-size: 2em;
+        margin-top: 1vh;
+    }
+#editPlaylist-modal {
+    display: none;
+}
+#editPlaylist-modal h3{
+    color: var(--mainText);
+}
+    .gray {
+        border: 3px solid var(--mainText);
+        color: var(--mainText);
+        background-color: var(--background);
+        margin: 0;
+        padding: 0;
+        width: 7vw;
+        margin-bottom: 2vh;
+    }
+        .gray:hover{
+            background: var(--mainText);
+            color: var(--background);
+            box-shadow: 0 0 0 0 var(--L4);
+            transform: scale(1);
+            animation: pulse-gradient 2s infinite;
+        }
+    .red {
+        border: 3px solid var(--F4);
+        color: var(--F4);
+        background-color: var(--background);
+        margin: 0;
+        padding: 0;
+        width: 7vw;
+        margin-bottom: 2vh;
+    }
+        .red:hover {
+            background: var(--F4);
+            color: var(--background);
+            box-shadow: 0 0 0 0 var(--L4);
+            transform: scale(1);
+            animation: pulse-gradient 2s infinite;
+        }
+
+/* =================================================== */
+/* - - - - - - - - - - - SONG- - - - - - - - - - - - - */
+/* =================================================== */
+
+/* =================================================== */
+/* - - - - - - - - - - - ALBUM - - - - - - - - - - - - */
+/* =================================================== */
+
+/* =================================================== */
+/* - - - - - - - - - - - ARTIST - - - - - - - - - - -  */
+/* =================================================== */
+
+/* =================================================== */
 /* - - - - - - - - - - ANIMATION - - - - - - - - - - - */
 /* =================================================== */
 
 @keyframes gradient {
 	0% {
-		background-position: 50% 0%;
+		background-position: 50% 50%;
 	}
     25% {
 		background-position: 100% 100%;
 	}
 	50% {
-		background-position: 50% 0%;
+		background-position: 50% 50%;
 	}
     75% {
-		background-position: 0% -100%;
+		background-position: 0% 0%;
 	}
 	100% {
-		background-position: 50% 0%;
+		background-position: 50% 50%;
 	}
 }
 @keyframes pulse-black {

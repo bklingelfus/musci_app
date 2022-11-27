@@ -1,30 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('./partials/setup.ejs')%>
-<body>
+<body id="search-page">
     <%- include('./partials/navbar.ejs')%>
-    <form action="/search" method="POST">
+    <form id='search-form' action="/search" method="POST">
         <input type="text" name="search" placeholder="song, artist, album, ...">
-        <input id='submitSearch' type="submit" value="Search">
+        <button type="submit"><ion-icon name="search-circle"></ion-icon></button>
     </form>
-    <table class="table">
-        <thead class="thead-dark">
+    <table id="search-table">
+        <thead>
             <tr>
                 <th></th>
-                <th>Title</th>
-                <th>Artist</th>
-                <th>Album</th>
+                <th class="mid-th">Title</th>
+                <th class="mid-th">Artist</th>
+                <th class="mid-th">Album</th>
                 <th></th>
             </tr>
         </thead>
         <% for(let i=0; i<songs.length && i<10;i++){ %>
             <tr>
-                <td>
-                    <form action="/" method="POST">
-                        <button type="submit" class='changeSong' name='song' value='<%=songs[i].mp3%>'>
-                            <img src="" alt="Album Cover">
-                        </button>
-                    </form>
+                <td class="album-td">
+                    <div class="song-cover">
+                        <form action="/" method="POST">
+                            <button type="submit" class='changeSong' name='song' value='<%=songs[i].mp3%>'>
+                                <img src="<%=songs[i].albumCover%>" alt="Album Cover">
+                            </button>
+                        </form>
+                    </div>
                 </td>
                 <td><a href="/song/<%=songs[i]._id%>"><%=songs[i].title%></a></td>
                 <td>
