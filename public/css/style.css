@@ -797,7 +797,7 @@ html, body {
         visibility: hidden;
         position: absolute;
         background-color: rgba(0, 0, 0, 0.232);
-        top: 21vh;
+        top: 20vh;
         right: auto;
         height: 40vh;
         width: 40vh;
@@ -807,6 +807,7 @@ html, body {
         color: var(--background);
         margin-top: 10vh;
     }
+        .song-album button {background: none; border: none;}
         .song-album button:hover .hover-song {
             visibility: visible;
         }
