@@ -36,7 +36,7 @@
                                 <div class="song-cover">
                                     <form action="/" method="POST">
                                         <button class='changeSong' type="submit" name='song' value='<%=currentPlaylist.songs[i].mp3%>'>
-                                            <img src="" alt="Album Cover">
+                                            <img src="<%=currentPlaylist.songs[i].albumCove%>" alt="Album Cover">
                                         </button>
                                     </form>
                                 </div>
@@ -77,7 +77,7 @@
                         <div class="song-cover">
                             <form action="/" method="POST">
                                 <button class='changeSong' type="submit" name='song' value='<%=currentPlaylist.songs[i].mp3%>'>
-                                    <img src="" alt="Album Cover">
+                                    <img src="<%=currentPlaylist.songs[i].albumCover%>" alt="Album Cover">
                                 </button>
                             </form>
                         </div>

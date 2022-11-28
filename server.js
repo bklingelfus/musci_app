@@ -27,9 +27,9 @@ const genres =[
     'Classical',
 ]
 
-let currentUser = {_id:'0', genres:[]};
-let currentSong ='';
-let currentPlaylist= '';
+let currentUser = {_id:'0', genres:[], playlists:[{songs:[]}]};
+let showPlaylist = {name: '', songs:[]};
+let currentPlaylist= {name: '', songs:[]};
 let currentSearch = [];
 
 const capitalize=(string)=> {
@@ -53,14 +53,12 @@ app.listen(3000, ()=>{
 });
 
 app.get('/',(req, res)=>{
-    res.render('index.ejs', {currentSong});
+    res.render('index.ejs', {});
 });
 
 app.get('/player', (req, res)=>{
-    console.log(currentSong)
     res.render('player.ejs',{
         currentPlaylist,
-        currentSong
     })
 });
 
@@ -107,11 +105,8 @@ app.get('/profile/:id/settings', (req, res)=>{
 });
 
 app.get('/playlist/:id', (req,res)=>{
-    if (currentPlaylist ===''){
-        currentPlaylist = currentUser.playlists[req.params.id];
-    }
     res.render('playlist.ejs',{
-        currentPlaylist,
+        currentPlaylist: showPlaylist,
         currentUser,
         id: req.params.id
     });
@@ -152,14 +147,9 @@ app.get('/:artist/:album', (req, res)=>{
 });
 
 // - - - - - - - - Pages Actions - - - - - - - - - - -
-    // Change player song
-app.post('/', (req, res)=> {
-    console.log(req.body)
-    currentSong = req.body.song;
-});
 // Change current playlist
 app.post('/changePlaylist/:id', (req,res)=>{
-    currentPlaylist=currentUser.playlists[req.params.id]
+    showPlaylist=currentUser.playlists[req.params.id]
     res.redirect('/playlist/:id')
 });
     // Change search display
@@ -176,6 +166,16 @@ app.post('/search', (req, res)=> {
             for (let i =0; i < match.length; i++){
                 currentSearch.push(match[i]);
             }
+            Song.find({artist: req.body.search}, (error, match)=>{
+                for (let i =0; i < match.length; i++){
+                    currentSearch.push(match[i]);
+                }
+                Song.find({album: req.body.search}, (error, match)=>{
+                    for (let i =0; i < match.length; i++){
+                        currentSearch.push(match[i]);
+                    }
+                });
+            });
         });
     }
     res.redirect('/search');
@@ -239,7 +239,6 @@ app.put('/editPlaylist/:id', (req, res)=>{
     for(let i=0;i<req.body.songs.length;i++) {
         let matchIndex = currentPlaylist.songs.findIndex(song => 
             {return song._id === req.body.songs[i]});
-        console.log(matchIndex)
         currentPlaylist.songs.splice(matchIndex, 1)
     }
     // change currentUser
@@ -247,4 +246,40 @@ app.put('/editPlaylist/:id', (req, res)=>{
     // update DB
     User.findByIdAndUpdate(currentUser._id, currentUser, {new:true}, (err,updatedUser)=>{});
     res.redirect('/profile/:id/');
+});
+    // Add to song to favorites
+app.put('/addToFavorites/:id', (req, res)=>{
+    console.log(req.params.id)
+    Song.find({_id:req.params.id}, (err, match)=>{
+        console.log(match)
+        if(currentUser.playlists[0].songs.includes(match)){
+            console.log('ola')
+            res.redirect('/profile/:id/');
+        } else {
+            currentUser.playlists[0].songs.push(match[0]);
+        }
+    });
+    // update DB
+    User.findByIdAndUpdate(currentUser._id, currentUser, {new:true}, (err,updatedUser)=>{});
+    res.redirect('/profile/:id/');
+});
+// Change player song
+app.post('/:genre/:artist/:album/:songID', (req, res)=> {
+    let genre = req.params.genre;
+    let artist = req.params.artist;
+    let album = req.params.album;
+    let songID = req.params.songID;
+    console.log(songID)
+    if (artist === 'all' && album ==='all' && genre==='all') {
+        Song.find({}, (err, match)=>{
+            Song.find({_id: songID}, (err, matchSong)=>{
+                console.log(matchSong)
+                match.unshift(matchSong[0])
+                currentPlaylist.name = 'All Random'
+                currentPlaylist.songs = match
+            })
+        })
+    }
+// console.log(req.body)
+// currentSong = req.body.song;
 });

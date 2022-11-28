@@ -1,55 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <%-include('./partials/setup.ejs')%>
-<body>
+<body id="artist-page">
     <%-include('./partials/navbar.ejs')%>
-    <button onclick="history.back()">Go Back</button>
-    <h3>You are in Artist</h3>
-    <ion-icon name="person"></ion-icon>
+    <div id="back-button">
+        <button onclick="history.back()"><ion-icon name="chevron-back-outline"></ion-icon></button>
+    </div>
+    <div id="artist-photo">
+        <ion-icon name="person"></ion-icon>
+    </div>
     <h3><%=artist%></h3>
     <h4>Top 5:</h4>
-    <table>
+    <table id="search-table">
         <thead>
             <tr>
                 <th>#</th>
-                <th></th>
-                <th>Title</th>
+                <th class="mid-th"></th>
+                <th class="mid-th">Title</th>
                 <th>Album</th>
             </tr>
         </thead>
         <% for(let i=0; i<artistCollection.length && i<5; i++){ %>
             <tr>
-                <th><%=i+1%></th>
-                <th>
-                    <form action="/" method="POST">
-                        <button class='changeSong' type="submit" name='song' value='<%=artistCollection[i].mp3%>'>
-                            <img src="" alt="Album Cover">
-                        </button>
-                    </form>
-                </th>
-                <th><%=artistCollection[i].title%></th>
-                <th><%=artistCollection[i].album%></th>
+                <td><%=i+1%></td>
+                <td class="album-td">
+                    <div class="song-cover">
+                        <form action="/" method="POST">
+                            <button class='changeSong' type="submit" name='song' value='<%=artistCollection[i].mp3%>'>
+                                <img src="<%=artistCollection[i].albumCover%>" alt="Album Cover">
+                            </button>
+                        </form>
+                    </div>
+                </td>
+                <td><a href="/song/<%=artistCollection[i]._id%>"><%=artistCollection[i].title%></a></td>
+                <td><a href="/<%=artistCollection[i].artist[0]%>/<%=artistCollection[i].album%>"><%=artistCollection[i].album%></a></td>
             </tr>
         <% } %>
     </table>
     <div>
         <h4>Albuns:</h4>
-        <% for(let i=0; i<albuns.length;i++){ %>
-            <% let info = artistCollection.find(e=> e.albuns ===albuns[i]) %>
-            <form action="/" method="POST">
-                <button class='changeSong' type="submit" name='song' value='<%=artistCollection[i].mp3%>'>
-                    <img src="" alt="Album Cover">
-                </button>
-            </form>
-            <a href="/<%=artist%>/<%=albuns[i]%>"><%=albuns[i]%></a>
-        <% } %>
+        <div class="playlist-container">
+            <% for(let i=0; i<albuns.length;i++){ %>
+                <% let info = artistCollection.find(e=> e.album ===albuns[i]) %>
+                <%console.log(info)%>
+                <div class="playlist-card">
+                    <form action="/" method="POST">
+                        <button class='changeSong' type="submit" name='song' value='<%=artistCollection[i].mp3%>'>
+                            <img src="<%=info.albumCover%>" alt="Album Cover">
+                            <div class="hover-play"><ion-icon name="play-sharp"></ion-icon></div>
+                        </button>
+                    </form>
+                    <a href="/<%=artist%>/<%=albuns[i]%>"><%=albuns[i]%></a>
+                </div>
+            <% } %>
+        </div>
     </div>
     <h4>Upcoming Events featuring <%=artist%></h4>
-    <div>
+    <div class="event-container">
         <% for(let i=0; i<2;i++){ %>
-            <div>
+            <div class="event-card">
                 <h5>Event Name</h5>
-                <img src="" alt="Artist Img">
+                <img src="/site/event-2.png" alt="Artist Img">
                 <p>Event information</p>
                 <div class="Google maps"></div>
             </div>

@@ -53,16 +53,16 @@
                     <input class="btn btn-outline-info" type="submit" value="Confirm Edit">
                 </form>
                 <h5>Playlists:</h5>
-                <div>
+                <!-- <div> -->
                     <%for(let i=0; i< currentUser.playlists.length; i++){ %>
                         <div class="playlist-holder">
                             <p><%=currentUser.playlists[i].name%> </p>
                             <form action="/deletePlaylist/<%=i%>?_method=PUT" method="POST">
-                                <%if (i>1){%><button type="submit"><ion-icon name="trash-outline"></ion-icon></button><%}%>
+                                <%if (i>1){%><button id='trash-button' type="submit"><ion-icon name="trash-outline"></ion-icon></button><%}%>
                             </form>
                         </div>
                     <%}%>
-                </div>
+                <!-- </div> -->
             </section>
             <section id="generalSettings">
                 <p>Some general settings adjustments that will be added further in the future</p>

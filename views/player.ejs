@@ -16,45 +16,59 @@
     <script src="/jQuery/player.js" charset="utf-8"></script>
 </head>
 <body id="player-body">
-    <script>window.onload = function() {
-        if(!window.location.hash) {
-            window.location = window.location + '#loaded';
-            window.location.reload();
+    <script>
+        window.onload = function() {
+            if(!window.location.hash) {
+                window.location = window.location + '#loaded';
+                window.location.reload();
+            }
         }
-    }</script>
+    </script>
     <figure id="footer">
         <div id="music-info">
             <div id="albumCover">
-                <img src="/songs/Linkin_Park-METEORA.jpeg" alt="Album Cover">
+                <% for(let i=0; i< currentPlaylist.songs.length; i++){ %>                
+                    <img class='player-album' src="<%=currentPlaylist.songs[i].albumCover%>" alt="Album Cover">
+                <% } %>
             </div>
             <div id="info">
                 <div id="currentSong">
-                    <button class="player-song" value="">song title</button>
+                    <% for(let i=0; i<currentPlaylist.songs.length; i++){ %>
+                        <button class="player-song" value=""><%=currentPlaylist.songs[i].title%></button>
+                    <% } %>
+                </div>
+                <div id="currentArtist">
+                    <% for(let i=0; i<currentPlaylist.songs.length; i++){ %>
+                        <button class="player-artist" value=""><%=currentPlaylist.songs[i].artist%></button>
+                    <% } %>
                 </div>
                 <div id="currentPlaylist">
-                    <button class="player-playlist" value="">playlist</button>
+                    <button class="player-playlist" value=""><%=currentPlaylist.name%></button>
                 </div>
             </div>
         </div>
-        <audio id="audio">
-            <p>Your browser does not support the audio element</p>
-            <source id="background-music" src='/songs/Linkin_Park-Numb.mp3' type="audio/mpeg">
-            <source id="background-music" src='<%=currentSong%>' type="audio/mpeg">
+        <audio id="audio" autoplay>
+            <% for(let i=0; i< currentPlaylist.songs.length; i++){ %>
+                <source class="background-music" src="<%=currentPlaylist.songs[i].mp3%>" type="audio/mpeg">
+            <% } %>
         </audio>
-        <div>
-            <div>
-                <button id="backplayer"><ion-icon name="play-back-sharp"></ion-icon></button>
-                <button id="play-pause"><ion-icon name="logo-google-playstore"></ion-icon></button>
-                <button id="nextplayer"><ion-icon name="play-forward-sharp"></ion-icon></button>
+        <div id="player-buttons">
+            <div id="player-buttons-container">
+                <button id="backplayer"><ion-icon name="play-skip-back-sharp"></ion-icon></button>
+                <button id="play-pause"><ion-icon id='play-icon' name="pause-outline"></ion-icon></button>
+                <button id="nextplayer"><ion-icon name="play-skip-forward-sharp"></ion-icon></button>
             </div>
-            <div>
-                <span id="currentTime">0</span>
-                <input type="range" id="time-slider">
-                <span id="totalTime">0</span>
-            </div>
+            <section>
+                <span id="currentTime">--</span>
+                <div id="track-time">
+                    <div id="left-track-time"></div>
+                    <div id="right-track-time"></div>
+                </div>
+                <span id="totalTime">--</span>
+            </section>
         </div>
         <div id="volume">
-            <button id="mute"><ion-icon name="mic"></ion-icon></button>
+            <button id="mute"><ion-icon id='mute-icon' name="mic"></ion-icon></button>
             <input type="range" id="volume-slider" value="20">
         </div>
         <script>

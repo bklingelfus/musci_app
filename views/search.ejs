@@ -2,6 +2,14 @@
 <html lang="en">
 <%- include('./partials/setup.ejs')%>
 <body id="search-page">
+    <script>
+        window.onload = function() {
+            if(!window.location.hash) {
+                window.location = window.location + '#loaded';
+                window.location.reload();
+            }
+        }
+    </script>
     <%- include('./partials/navbar.ejs')%>
     <form id='search-form' action="/search" method="POST">
         <input type="text" name="search" placeholder="song, artist, album, ...">
@@ -17,11 +25,11 @@
                 <th></th>
             </tr>
         </thead>
-        <% for(let i=0; i<songs.length && i<10;i++){ %>
+        <% for(let i=0; i<songs.length && i<15;i++){ %>
             <tr>
                 <td class="album-td">
                     <div class="song-cover">
-                        <form action="/" method="POST">
+                        <form action="/all/all/all/<%=songs[i]._id%>" method="POST">
                             <button type="submit" class='changeSong' name='song' value='<%=songs[i].mp3%>'>
                                 <img src="<%=songs[i].albumCover%>" alt="Album Cover">
                             </button>
@@ -35,7 +43,22 @@
                     <% } %>
                 </td>
                 <td><a href="/<%=songs[i].artist[0]%>/<%=songs[i].album%>"><%=songs[i].album%></a></td>
-                <th></th>
+                <td>   
+                    <% if(currentUser._id==='0'){ %>
+                    <% } else { %>             
+                        <div class="favorite-song">
+                            <form action="/addToFavorites/<%=songs[i]._id%>?_method=PUT" method="POST">
+                                <button type="submit" name='song' value=''>
+                                    <% if(currentUser.playlists[0].songs.includes(songs[i])){ %>
+                                        <ion-icon class='fav' name="star"></ion-icon>
+                                    <% } else { %>
+                                        <ion-icon class='notfav' name="star-outline"></ion-icon>
+                                    <% }%>
+                                </button>
+                            </form>
+                        </div>
+                    <% } %>    
+                </td>
             </tr>
         <% } %>
     </table>

@@ -141,7 +141,7 @@ html, body {
 #footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     width: 100%;
     height: 100%;
     margin: 0;
@@ -149,10 +149,24 @@ html, body {
     background-color: var(--footer);
     border-top: 2px solid var(--mainText);
 }
-#music-info {display: flex;margin-left: 2vw;}
-    #albumCover img{
+    #footer button {
+        background: none;
+        border: none;
+    }
+#music-info {
+    display: flex; 
+    flex:1; 
+    margin-left: 5px;
+}
+    #albumCover img {
+        display: none;
+    }
+    #albumCover img:first-of-type {
+        display: block;
         height: 70px;
         width: auto;
+        margin-top: auto;
+        margin-bottom: auto;
     }
     #info button{
         background-color: transparent;
@@ -162,8 +176,94 @@ html, body {
         #info button:hover {
             text-decoration: underline;
         }
-        .player-song {
-            font-weight: bold;
+        .player-playlist{font-size: 0.75em;}
+    #currentSong button {display: none;}
+    #currentSong button:first-of-type {display: block;}
+        .player-song {font-weight: bold;font-size: 0.75em; text-align: left;}
+    #currentArtist button {display: none;}
+    #currentArtist button:first-of-type {display: block;}
+        .player-artist {font-size: 0.7em;}
+#player-buttons {
+    display: flex; 
+    justify-content: space-around;
+    flex-direction: column;
+    flex:1; 
+    min-width: 400px;
+}
+    #player-buttons section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #player-buttons-container {
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        align-items: center;
+    }
+        #track-time {
+            height: 3px;
+            width: 90%;
+            display: flex;
+        }
+        #left-track-time {
+            height: 100%;
+            width: 40%;
+            background: var(--text);
+        }
+        #right-track-time {
+            height: 100%;
+            width: 60%;
+            background: var(--mainText);
+        }
+        #currentTime {
+            font-size: 0.7em;
+            margin-right: 3px;
+            color: var(--mainText);
+        }
+        #totalTime {
+            font-size: 0.7em;
+            margin-left: 3px;
+            color: var(--mainText);
+        }
+        #backplayer ion-icon {
+            font-size: 1.5em;
+            color: var(--mainText);
+        }
+        #nextplayer ion-icon {
+            font-size: 1.5em;
+            color: var(--mainText);
+        }
+        #play-pause ion-icon {
+            font-size: 2em;
+            color: var(--mainText);
+        }
+            #backplayer ion-icon:hover {
+                font-size: 1.6em;
+                color: black;
+            }
+            #nextplayer ion-icon:hover {
+                font-size: 1.6em;
+                color: black;
+            }
+            #play-pause ion-icon:hover {
+                font-size: 2.1em;
+                color: var(--F4);
+            }
+#volume {
+    display: flex; 
+    flex:1; 
+    justify-content: end;
+    margin-right: 5px;
+}
+    #volume ion-icon {
+        font-size: 1.5em;
+        color: var(--mainText);
+        margin-top: 20%;
+    }
+        #volume ion-icon:hover {
+            font-size: 1.6em;
+            color: var(--F4);
         }
 
 /* =================================================== */
@@ -183,11 +283,11 @@ html, body {
 }
 #home-page h5 {
     color: var(--mainText);
-    margin: auto 5vw;
+    margin: auto;
 }
 #home-page p {
     color: var(--text);
-    margin: auto 5vw;
+    margin: auto;
 }
     .playlist-container {
         display: flex;
@@ -304,11 +404,11 @@ html, body {
 }
 #profile-page h5 {
     color: var(--mainText);
-    margin: auto 5vw;
+    margin: auto;
 }
 #profile-page p {
     color: var(--text);
-    margin: auto 5vw;
+    margin: auto;
 }
     .minePlaylist {height: 240px;}
     .create-playlist{
@@ -360,6 +460,7 @@ html, body {
         text-align: center;
         border-radius: 20px;
         border: 2px solid var(--mainText);
+        background: var(--footer);
     }
     #search-form button{
         background: none;
@@ -426,6 +527,21 @@ html, body {
         #search-table tr {
             border-bottom: 1px solid var(--text);
         }
+    .favorite-song button {
+        background: none;
+        border: none;
+    }
+    .favorite-song ion-icon {
+        font-size: 1.3em;
+        margin-top: 20%;
+    }
+    .favorite-song ion-icon:hover {
+        box-shadow: 0 0 0 0 var(--L4);
+        transform: scale(1);
+        animation: pulse-gradient 2s infinite;
+    }
+        .fav {color: var(--F4);}
+        .notfav{color: var(--mainText);}
 
 /* =================================================== */
 /* - - - - - - - - - - SETTINGS - - - - - - - - - - -  */
@@ -448,7 +564,6 @@ html, body {
     }
 #settings-page form {text-align: center; color: var(--mainText);}
     #settings-page input {margin: 1vh;}
-    #settings-page button{margin: 3vh;}
     #settings-page h5 {
         margin: 1vh auto 0.5vh;
         color: var(--mainText);
@@ -469,6 +584,7 @@ html, body {
         color: var(--background);
         font-weight: bold;
         font-size: 1.5em;
+        margin: 3vh;
     }
         .create-user:hover {
             background: var(--F4);
@@ -536,7 +652,7 @@ html, body {
             }
         .playlist-holder {
             display: flex;
-            /* align-items: center; */
+            align-items: center;
         }
             .playlist-holder p {
                 width: 50%;
@@ -564,6 +680,12 @@ html, body {
                 /* padding: 0; */
                 color: var(--mainText);
                 font-size: 1.8em;
+            }
+            #trash-button {
+                /* position: absolute; */
+                /* left: 0; */
+                /* margin-left: 0; */
+                /* margin-bottom: 20vh; */
             }
                 .playlist-holder ion-icon:hover{
                     color: var(--F4);
@@ -597,7 +719,7 @@ html, body {
     }
     .playlist-info ion-icon {
         font-size: 2em;
-        margin-top: 1vh;
+        margin-top: 10%;
     }
 #editPlaylist-modal {
     display: none;
@@ -612,7 +734,7 @@ html, body {
         margin: 0;
         padding: 0;
         width: 7vw;
-        margin-bottom: 2vh;
+        margin-bottom: 3vh;
     }
         .gray:hover{
             background: var(--mainText);
@@ -641,14 +763,152 @@ html, body {
 /* =================================================== */
 /* - - - - - - - - - - - SONG- - - - - - - - - - - - - */
 /* =================================================== */
+#song-page{margin-top: 15vh; text-align: center;}
+#song-page h3 {
+    color: var(--background);
+    margin: 2vh 5vw 2vh;
+    padding-left: 1vw;
+    /* box-shadow: 10px 0 5px -2px var(--background) inset; */
+    background: linear-gradient(90deg, var(--background), var(--text), var(--background));
+}
+#song-page h4 {
+    text-align: left;
+    color: var(--mainText);
+    margin: 5vh 5vw 2vh;
+    padding-left: 1vw;
+    /* box-shadow: 10px 0 5px -2px var(--background) inset; */
+    background: linear-gradient(90deg, var(--text), var(--background));
+}
+#song-page h5 {
+    color: var(--mainText);
+    margin: auto 5vw;
+}
+#song-page p {
+    color: var(--text);
+    margin: auto 5vw;
+}
+    .song-album img {
+        height: 40vh;
+        width: 40vh;
+    }        
+    .hover-song {
+        visibility: hidden;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.232);
+        top: 21vh;
+        right: auto;
+        height: 40vh;
+        width: 40vh;
+    }
+    .hover-song ion-icon {
+        font-size: 10em;
+        color: var(--background);
+        margin-top: 10vh;
+    }
+        .song-album button:hover .hover-song {
+            visibility: visible;
+        }
+    #back-button{
+        text-align: left;
+        margin-left: 5vw;
+    }
+    #song-table {
+        margin-left: auto;
+        margin-right: auto;
+    }
+        .label-value {
+            width: 30vw;
+            min-width: 200px;
+        }
+        .label {
+            color: var(--mainText);
+            font-weight: bold;
+            margin: auto 2vw;
+            width: 12vw;
+            min-width: 120px;
+            border-right: 1px solid var(--text);
+        }
+        #song-table tr {
+            border-bottom: 1px solid var(--text);
+        }
+        #song-table a{
+            color: var(--mainText);
+            margin-left: 1vw;
+        }
+            #song-table a:hover{                
+                background: var(--lineGradient);
+                background-size: 200% 200%;
+                -webkit-background-clip: text;
+                color: transparent;
+                animation: gradient 5s ease infinite;
+            }
+    #back-button button {
+        border: none;
+        background: transparent;
+    }
+    #back-button ion-icon {
+        font-size: 2em;
+        color: var(--mainText);
+    }
 
 /* =================================================== */
 /* - - - - - - - - - - - ALBUM - - - - - - - - - - - - */
 /* =================================================== */
+#album-page{margin-top: 15vh;text-align: center;}
+#album-page h3 {
+    color: var(--background);
+    margin: 2vh 5vw 2vh;
+    padding-left: 1vw;
+    /* box-shadow: 10px 0 5px -2px var(--background) inset; */
+    background: linear-gradient(90deg, var(--background), var(--text), var(--background));
+}
+#album-page h4 {
+    text-align: left;
+    color: var(--mainText);
+    margin: 5vh 5vw 2vh;
+    padding-left: 1vw;
+    /* box-shadow: 10px 0 5px -2px var(--background) inset; */
+    background: linear-gradient(90deg, var(--text), var(--background));
+}
+#album-page h5 {
+    color: var(--mainText);
+    margin: auto 5vw;
+}
+#album-page p {
+    color: var(--text);
+    margin: auto 5vw;
+}
 
 /* =================================================== */
 /* - - - - - - - - - - - ARTIST - - - - - - - - - - -  */
 /* =================================================== */
+#artist-page{margin-top: 15vh;text-align: center;}
+#artist-page h3 {
+    color: var(--background);
+    margin: 2vh 5vw 2vh;
+    padding-left: 1vw;
+    /* box-shadow: 10px 0 5px -2px var(--background) inset; */
+    background: linear-gradient(90deg, var(--background), var(--text), var(--background));
+}
+#artist-page h4 {
+    text-align: left;
+    color: var(--mainText);
+    margin: 5vh 5vw 2vh;
+    padding-left: 1vw;
+    /* box-shadow: 10px 0 5px -2px var(--background) inset; */
+    background: linear-gradient(90deg, var(--text), var(--background));
+}
+#artist-page h5 {
+    color: var(--mainText);
+    margin: auto 5vw;
+}
+#artist-page p {
+    color: var(--text);
+    margin: auto 5vw;
+}
+#artist-photo ion-icon{
+    font-size: 15em;
+}
 
 /* =================================================== */
 /* - - - - - - - - - - ANIMATION - - - - - - - - - - - */

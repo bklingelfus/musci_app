@@ -11,9 +11,12 @@
             <% for(let i=0;i<currentUser.playlists.length;i++){ %>
                 <div class="playlist-card minePlaylist">
                     <form action="/changePlaylist/<%=i%>" method="POST">
-                        <button type='submit'><img src="/site/playlist.png" alt="Playlist Image"></button>
+                        <button type='submit'>
+                            <img src="/site/playlist.png" alt="Playlist Image">
+                        </button>
                         <a href="/playlist/<%=i%>"><%=currentUser.playlists[i].name%></a>
                         <p><%=currentUser.playlists[i].songs.length%> songs</p>
+                        <div class="hover-play"><ion-icon name="play-sharp"></ion-icon></div>
                     </form>
                 </div>
             <% } %>
