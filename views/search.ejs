@@ -45,18 +45,24 @@
                 <td><a href="/<%=songs[i].artist[0]%>/<%=songs[i].album%>"><%=songs[i].album%></a></td>
                 <td>   
                     <% if(currentUser._id==='0'){ %>
-                    <% } else { %>             
-                        <div class="favorite-song">
-                            <form action="/addToFavorites/<%=songs[i]._id%>?_method=PUT" method="POST">
-                                <button type="submit" name='song' value=''>
-                                    <% if(currentUser.playlists[0].songs.includes(songs[i])){ %>
-                                        <ion-icon class='fav' name="star"></ion-icon>
-                                    <% } else { %>
-                                        <ion-icon class='notfav' name="star-outline"></ion-icon>
-                                    <% }%>
-                                </button>
-                            </form>
-                        </div>
+                    <% } else { %>  
+                        <% if(currentUser.playlists[0].songs.includes(songs[i])){ %>         
+                            <div class="favorite-song">
+                                <form action="" method="POST">
+                                    <button type="submit" name='song' value=''>
+                                        <ion-icon class='fav' name="star"></ion-icon>                                    
+                                    </button>
+                                </form>
+                            </div>
+                        <% } else { %>          
+                            <div class="favorite-song">
+                                <form action="/addToFavorites/<%=songs[i]._id%>?_method=PUT" method="POST">
+                                    <button type="submit" name='song' value=''>
+                                        <ion-icon class='notfav' name="star-outline"></ion-icon>                                    
+                                    </button>
+                                </form>
+                            </div>
+                        <% }%> 
                     <% } %>    
                 </td>
             </tr>

@@ -249,7 +249,6 @@ app.put('/editPlaylist/:id', (req, res)=>{
 });
     // Add to song to favorites
 app.put('/addToFavorites/:id', (req, res)=>{
-    console.log(req.params.id)
     Song.find({_id:req.params.id}, (err, match)=>{
         console.log(match)
         if(currentUser.playlists[0].songs.includes(match)){
