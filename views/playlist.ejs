@@ -4,7 +4,7 @@
 <body id="playlist-page">
     <%-include('./partials/navbar.ejs')%>
     <div class="playlist-info">
-        <img src="/site/playlist.png" alt="Standard Image">
+        <img id='playlist-img' src="/site/playlist.png" alt="Standard Image">
         <h2><%=currentPlaylist.name%></h2>
         <% if(currentUser.playlists.includes(currentPlaylist)){ %>
             <button id='modalButton' class="gray"><ion-icon name="create"></ion-icon></button>
@@ -35,8 +35,8 @@
                             <td class="album-td">
                                 <div class="song-cover">
                                     <form action="/" method="POST">
-                                        <button class='changeSong' type="submit" name='song' value='<%=currentPlaylist.songs[i].mp3%>'>
-                                            <img src="<%=currentPlaylist.songs[i].albumCove%>" alt="Album Cover">
+                                        <button class='changeSong' id="modal-song" type="submit" name='song' value='<%=currentPlaylist.songs[i].mp3%>'>
+                                            <img src="<%=currentPlaylist.songs[i].albumCover%>" alt="Album Cover">
                                         </button>
                                     </form>
                                 </div>

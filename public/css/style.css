@@ -479,14 +479,15 @@ html, body {
             }
 #search-table {
     margin: 2vh auto;
-    width: 90vh;
-    max-width: 900px;
+    width: 85vw;
+    max-width: 1200px;
 }
     #search-table thead {
         border-bottom: 2px solid var(--text);
         color: var(--text);
         font-size: 1.3em;
     }
+        #search-table td{min-width: 5vw;}
         #search-table th {
             padding-left: 1vw;
         }
@@ -530,6 +531,7 @@ html, body {
     .favorite-song button {
         background: none;
         border: none;
+        margin: auto;
     }
     .favorite-song ion-icon {
         font-size: 1.3em;
@@ -715,7 +717,7 @@ html, body {
     /* box-shadow: 10px 0 5px -2px var(--background) inset; */
     background: linear-gradient(90deg, var(--background), var(--text), var(--background));
 }
-    .playlist-info img{
+    #playlist-img {
         width: 30vw;
         height: auto;
     }

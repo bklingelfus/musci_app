@@ -68,7 +68,7 @@ app.get('/home', (req, res)=>{
         console.log(count);
         if( count < 1) {
             console.log('went this way')
-            for(let i=0;i<5;i++){
+            for(let i=0;i<1;i++){
                 Song.create(data);
             }
         } else {
@@ -97,6 +97,7 @@ app.get('/profile/:id', (req, res)=>{
         genres
     })
 });
+
 app.get('/profile/:id/settings', (req, res)=>{
     res.render('profileSettings.ejs', {
         currentUser, 
@@ -136,7 +137,6 @@ app.get('/:artist', (req, res)=>{
 
 app.get('/:artist/:album', (req, res)=>{
     Song.find({artist: req.params.artist, album:req.params.album}).sort({songNum:1}).exec((err, match)=>{
-        console.log(match)
         res.render('album.ejs', {
             currentUser,
             artist: req.params.artist,
@@ -150,7 +150,7 @@ app.get('/:artist/:album', (req, res)=>{
 // Change current playlist
 app.post('/changePlaylist/:id', (req,res)=>{
     showPlaylist=currentUser.playlists[req.params.id]
-    res.redirect('/playlist/:id')
+    res.redirect(`/playlist/${req.params.id}`)
 });
     // Change search display
 app.post('/search', (req, res)=> {
@@ -235,29 +235,40 @@ app.put('/createPlaylist', (req,res)=>{
     // Edit user playlist
 app.put('/editPlaylist/:id', (req, res)=>{
     // edit currentUser
-    currentPlaylist.name =req.body.name
+    showPlaylist.name =req.body.name
     for(let i=0;i<req.body.songs.length;i++) {
-        let matchIndex = currentPlaylist.songs.findIndex(song => 
+        let matchIndex = showPlaylist.songs.findIndex(song => 
             {return song._id === req.body.songs[i]});
-        currentPlaylist.songs.splice(matchIndex, 1)
+        showPlaylist.songs.splice(matchIndex, 1)
     }
     // change currentUser
-    currentUser.playlists[req.params.id] = currentPlaylist
+    currentUser.playlists[req.params.id] = showPlaylist
     // update DB
     User.findByIdAndUpdate(currentUser._id, currentUser, {new:true}, (err,updatedUser)=>{});
-    res.redirect('/profile/:id/');
+    res.redirect(`/profile/:id/`);
 });
     // Add to song to favorites
-app.put('/addToFavorites/:id', (req, res)=>{
+app.put('/addToFavorites/:id', (req, res)=>{   
+    console.log(currentUser.playlists[0])
     Song.find({_id:req.params.id}, (err, match)=>{
+        // let matchIndex = currentUser.playlists[0].songs.findIndex(song => 
+        //     {return song === match[0]});
+        // if(matchIndex >=0){
+        //     console.log('Match Found')
+        // } else {
+        // }
         console.log(match)
-        if(currentUser.playlists[0].songs.includes(match)){
-            console.log('ola')
-            res.redirect('/profile/:id/');
+        if (currentUser.playlists[0].songs.includes(match[0])){
+            console.log('found')
         } else {
             currentUser.playlists[0].songs.push(match[0]);
         }
+        // console.log(matchIndex)
     });
+    console.log(currentUser.playlists[0])
+    // if (currentUser.playlists[0].songs.some(e => e._id === req.params.id)) {
+    //     console.log('contains')
+    // }
     // update DB
     User.findByIdAndUpdate(currentUser._id, currentUser, {new:true}, (err,updatedUser)=>{});
     res.redirect('/profile/:id/');
@@ -268,7 +279,6 @@ app.post('/:genre/:artist/:album/:songID', (req, res)=> {
     let artist = req.params.artist;
     let album = req.params.album;
     let songID = req.params.songID;
-    console.log(songID)
     if (artist === 'all' && album ==='all' && genre==='all') {
         Song.find({}, (err, match)=>{
             Song.find({_id: songID}, (err, matchSong)=>{

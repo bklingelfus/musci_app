@@ -2,6 +2,14 @@
 <html lang="en">
 <%- include('./partials/setup.ejs')%>
 <body id="profile-page">
+    <script>
+        window.onload = function() {
+            if(!window.location.hash) {
+                window.location = window.location + '#loaded';
+                window.location.reload();
+            }
+        }
+    </script>
     <%- include('./partials/navbar.ejs')%>
     <h3>My Playlists</h3>
     <% if(currentUser._id==='0'){ %>
