@@ -48,9 +48,10 @@ mongoose.connect(mongoURI, () => {
 
 
 // - - - - - - - - - - Pages - - - - - - - - - - - - -
-app.listen(3000, ()=>{
-    console.log(`Listening...`);
-});
+app.listen(process.env.PORT || 3000, 
+	() => console.log("Server is running...")
+);
+
 
 app.get('/',(req, res)=>{
     res.render('index.ejs', {});
