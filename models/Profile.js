@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const song = require('./songSchema.js');
+const song = require('./Song.js');
 
 // create a new Schema
 const profileSchema = new mongoose.Schema({

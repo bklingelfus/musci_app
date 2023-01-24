@@ -54,9 +54,9 @@ app.set("views", "./views")
 
 
 // - - - - - - - - Useful variables - - - - - - - - - - -
-const data = require('./models/data.js');
-const Song = require('./models/songSchema.js');
-const User = require('./models/userSchema.js');
+const data = require('./public/data.js');
+const Song = require('./models/Song.js');
+const User = require('./models/Profile.js');
 
 const genres =[
     'Eletronic',
