@@ -6,6 +6,8 @@ const app = express();
 const db = mongoose.connection;
 require('dotenv').config()
 
+mongoose.set('strictQuery', true);
+
 // Allow use of Heroku's port or your own local port, depending on the environment
 const PORT = process.env.PORT || 3003;
 
