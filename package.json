@@ -1,6 +1,9 @@
 {
   "name": "music_app",
   "version": "1.0.0",
+  "engines": {
+    "node": "16.18.0"
+  },
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -18,9 +21,10 @@
   },
   "homepage": "https://github.com/bklingelfus/music_app#readme",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
     "method-override": "^3.0.0",
-    "mongoose": "^6.7.2"
+    "mongoose": "^6.8.4"
   }
 }

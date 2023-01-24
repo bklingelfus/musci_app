@@ -5,11 +5,9 @@ const methodOverride = require('method-override');
 const app = express();
 const db = mongoose.connection;
 require('dotenv').config()
-//___________________
-//Port
-//___________________
+
 // Allow use of Heroku's port or your own local port, depending on the environment
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3003;
 
 //___________________
 //Database
@@ -17,8 +15,31 @@ const PORT = process.env.PORT
 // How to connect to the database either via heroku or locally
 const MONGODB_URI = process.env.MONGODB_URI;
 
+// Connect to Mongo &
+// Fix Depreciation Warnings from Mongoose
+// May or may not need these depending on your Mongoose version
+mongoose.connect(MONGODB_URI , { useNewUrlParser: true, useUnifiedTopology: true}
+    );
+    
+    // Error / success
+    db.on('error', (err) => console.log(err.message + ' is Mongod not running?'));
+    db.on('connected', () => console.log('mongo connected: ', MONGODB_URI));
+    db.on('disconnected', () => console.log('mongo disconnected'));
 
-app.use(express.urlencoded({extended: true}));
+// - - - - - - - - - MongoDB setup - - - - - - - - - - -
+// const mongoURI = 'mongodb://localhost:27017/'+ 'music_app';
+// mongoose.connect(mongoURI, () => {
+// 	console.log('the connection with mongod is established');
+// });
+//     // Errors
+//     db.on('error', (err) => console.log(err.message + ' is mongod not running?'));
+//     db.on('connected', () => console.log('mongo connected: ', mongoURI));
+//     db.on('disconnected', () => console.log('mongo disconnected'));
+
+app.use(express.urlencoded({ extended: false }));// extended: false - does not allow nested objects in query strings
+app.use(express.json());
+
+// app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 // CSS
 app.use(express.static('public'));
@@ -49,21 +70,9 @@ const capitalize=(string)=> {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-// - - - - - - - - - MongoDB setup - - - - - - - - - - -
-mongoose.connect(MONGODB_URI, () => {
-    console.log('connected')
-});
-
-// Error / success
-db.on('error', (err) => console.log(err.message + ' is Mongod not running?'));
-db.on('connected', () => console.log('mongo connected: ', MONGODB_URI));
-db.on('disconnected', () => console.log('mongo disconnected'));
-
 
 // - - - - - - - - - - Pages - - - - - - - - - - - - -
-app.listen(process.env.PORT || 3000, 
-	() => console.log("Server is running...")
-);
+app.listen(PORT, () => console.log( 'Listening on port:', PORT));
 
 
 app.get('/',(req, res)=>{
