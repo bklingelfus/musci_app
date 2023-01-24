@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const song = require('./songSchema.js');
 
 // create a new Schema
-const userSchema = new mongoose.Schema({
+const profileSchema = new mongoose.Schema({
     username: {type:String, unique: true},
     password: String,
     creator: {type:Boolean, default: false},
@@ -14,6 +14,6 @@ const userSchema = new mongoose.Schema({
     ],
 });
 
-const userCollections = mongoose.model('User', userSchema);
+const profileCollections = mongoose.model('Profile', profileSchema);
 
-module.exports = userCollections;
+module.exports = profileCollections;

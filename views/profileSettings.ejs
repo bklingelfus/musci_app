@@ -17,7 +17,7 @@
         <h5>Favorite Genres:</h5>
         <div>                
             <%for(let i=0; i< genres.length; i++){ %>
-                <%=genres[i]%> <input type="checkbox" name="genrePreferences[<%=i%>]" value="<%=genres[i]%>"><%if(i%3===2){%></br><%}%>
+                <%=genres[i]%> <input type="checkbox" name="genrePreferences<%=i%>" value="<%=genres[i]%>"><%if(i%3===2){%></br><%}%>
             <%}%>
         </div>
         <button class='create-user' type="submit">Create Account!</button>
@@ -47,7 +47,7 @@
                     <h5>Favorite Genres:</h5>
                     <div>
                         <%for(let i=0; i< genres.length; i++){ %>
-                            <%=genres[i]%> <input type="checkbox" name="genrePreferences[<%=i%>]" value="<%=genres[i]%>" <% if(currentUser.genrePreferences.includes(genres[i])){%>checked<%}%>><%if(i%3===2){%></br><%}%>
+                            <%=genres[i]%> <input type="checkbox" name="genrePreferences<%=i%>" value="<%=genres[i]%>" <% if(currentUser.genrePreferences.includes(genres[i])){%>checked<%}%>><%if(i%3===2){%></br><%}%>
                         <%}%>
                     </div>
                     <input class="btn btn-outline-info" type="submit" value="Confirm Edit">

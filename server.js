@@ -80,6 +80,7 @@ app.get('/',(req, res)=>{
 });
 
 app.get('/player', (req, res)=>{
+    console.log(currentPlaylist)
     res.render('player.ejs',{
         currentPlaylist,
     })
@@ -205,12 +206,44 @@ app.post('/search', (req, res)=> {
 });
     // Create user
 app.post('/createUser',(req, res)=>{
+    req.body.genrePreferences =[];
+    try {
+        if (typeof req.body.genrePreferences0 === 'string') {
+            req.body.genrePreferences.push(req.body.genrePreferences0)
+        }
+    } catch { console.log("Error")}
+    try {
+        if (typeof req.body.genrePreferences1 === 'string') {
+            req.body.genrePreferences.push(req.body.genrePreferences1)
+        }
+    } catch { console.log("Error")}
+    try {
+        if (typeof req.body.genrePreferences2 === 'string') {
+            req.body.genrePreferences.push(req.body.genrePreferences2)
+        }
+    } catch { console.log("Error")}
+    try {
+        if (typeof req.body.genrePreferences3 === 'string') {
+            req.body.genrePreferences.push(req.body.genrePreferences3)
+        }
+    } catch { console.log("Error")}
+    try {
+        if (typeof req.body.genrePreferences4 === 'string') {
+            req.body.genrePreferences.push(req.body.genrePreferences4)
+        }
+    } catch { console.log("Error")}
+    try {
+        if (typeof req.body.genrePreferences5 === 'string') {
+            req.body.genrePreferences.push(req.body.genrePreferences5)
+        }
+    } catch { console.log("Error")}
+    
     // adjusting req.body for model
     if (req.body.creator==='on'){req.body.creator=true};
-    req.body.playlists =[];
-    req.body.playlists.push(
-        {name: 'Favorites', songs: []},
-        {name: 'Weekly Adventure', songs: []}
+        req.body.playlists =[];
+        req.body.playlists.push(
+            {name: 'Favorites', songs: []},
+            {name: 'Weekly Adventure', songs: []}
     );
     // creating user
     User.create(req.body, (error, newUser)=>{
@@ -229,6 +262,38 @@ app.delete('/reset/:id', (req, res)=>{
 });
     // Edit user
 app.put('/editUser/:id',(req, res)=>{
+
+    req.body.genrePreferences =[];
+    try {
+        if (typeof req.body.genrePreferences0 === 'string') {
+            req.body.genrePreferences.push(req.body.genrePreferences0)
+        }
+    } catch { console.log("Error")}
+    try {
+        if (typeof req.body.genrePreferences1 === 'string') {
+            req.body.genrePreferences.push(req.body.genrePreferences1)
+        }
+    } catch { console.log("Error")}
+    try {
+        if (typeof req.body.genrePreferences2 === 'string') {
+            req.body.genrePreferences.push(req.body.genrePreferences2)
+        }
+    } catch { console.log("Error")}
+    try {
+        if (typeof req.body.genrePreferences3 === 'string') {
+            req.body.genrePreferences.push(req.body.genrePreferences3)
+        }
+    } catch { console.log("Error")}
+    try {
+        if (typeof req.body.genrePreferences4 === 'string') {
+            req.body.genrePreferences.push(req.body.genrePreferences4)
+        }
+    } catch { console.log("Error")}
+    try {
+        if (typeof req.body.genrePreferences5 === 'string') {
+            req.body.genrePreferences.push(req.body.genrePreferences5)
+        }
+    } catch { console.log("Error")}
     // adjusting model
     if (req.body.creator==='on'){req.body.creator=true}
     else{req.body.creator=false};

@@ -2,6 +2,7 @@
 
 // - - - - - - - FUNCTIONS - - - - - - - - -
 const refreshPlayer =()=>{
+    console.log("Refresh")
     const $player= window.parent.document.getElementById('iframe-player');
     $player.src = $player.src;
 };
@@ -36,7 +37,7 @@ const closeModal =()=>{
 $(()=> {
     // Changing Player
     $(document).ready(function(){
-        $('.changeSong').on('click', refreshPlayer);
+        $('.changeSong').on('click', (refreshPlayer));
     });
     // Player Functions
     $(document).ready(function(){

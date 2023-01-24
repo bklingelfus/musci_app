@@ -46,7 +46,6 @@ $(()=>{
         rightTrack.setAttribute('style', rightUpdate);
         // if song ended play next
         if (p===l) {
-            console.log('yeds')
             nextFunction()
         }
     }
