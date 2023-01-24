@@ -4,6 +4,19 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const app = express();
 const db = mongoose.connection;
+require('dotenv').config()
+//___________________
+//Port
+//___________________
+// Allow use of Heroku's port or your own local port, depending on the environment
+const PORT = process.env.PORT
+
+//___________________
+//Database
+//___________________
+// How to connect to the database either via heroku or locally
+const MONGODB_URI = process.env.MONGODB_URI;
+
 
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
@@ -37,14 +50,14 @@ const capitalize=(string)=> {
 }
 
 // - - - - - - - - - MongoDB setup - - - - - - - - - - -
-const mongoURI = 'mongodb://localhost:27017/'+ 'music_app';
-mongoose.connect(mongoURI, () => {
-	console.log('the connection with mongod is established');
+mongoose.connect(MONGODB_URI, () => {
+    console.log('connected')
 });
-    // Errors
-    db.on('error', (err) => console.log(err.message + ' is mongod not running?'));
-    db.on('connected', () => console.log('mongo connected: ', mongoURI));
-    db.on('disconnected', () => console.log('mongo disconnected'));
+
+// Error / success
+db.on('error', (err) => console.log(err.message + ' is Mongod not running?'));
+db.on('connected', () => console.log('mongo connected: ', MONGODB_URI));
+db.on('disconnected', () => console.log('mongo disconnected'));
 
 
 // - - - - - - - - - - Pages - - - - - - - - - - - - -
